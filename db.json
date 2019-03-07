@@ -1,4 +1,10 @@
 {
+  users: [
+     { "id": 1, "username": "s.shamloo","name": "saeed", "family":"shamloo", "roles": ["user", "admin"] },
+    { "id":2, "username": "d.razavi","name": "danesh", "family":"razavi", "roles": ["user", "admin"] },
+    { "id":3, "username": "h.masboogh","name": "hosein", "family":"masboogh", "roles": ["user"] },
+    { "id": 4, "username": "a.pirmoradi","name": "abbas", "family":"pirmoradi", "roles": ["user"] }
+  ]
   "posts": [
     { "id": 1, "title": "json-server", "author": "typicode" }
   ],
