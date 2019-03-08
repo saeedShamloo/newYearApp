@@ -1,0 +1,13 @@
+html,body, #root,#root > div  {
+    margin: 0;
+    min-height:100%;
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'byekan';
+    src: url('./fonts/Yekan.ttf') format('woff'),
+       url('./fonts/Yekan.woff')  format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
