@@ -16,7 +16,8 @@ export type SideMenuProps = {
     classes: SideMenuClasses,
     open: boolean,
     handleDrawerClose: ()=> void,
-    routes: any[]
+    routes: any[],
+    isAdmin: boolean
 };
 export type SideMenuState = {};
 
@@ -25,7 +26,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
         super(props);
     }
     render(){
-        const {classes, open, handleDrawerClose, routes} = this.props;
+        const {classes, open, handleDrawerClose, routes, isAdmin} = this.props;
         return(
             <Drawer
             variant="permanent"
@@ -41,7 +42,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
               </IconButton>
             </div>
             <Divider />
-            <List>{routes.map((route:any, key: number)=> <SideLink route={route} key={key}/>)}</List>
+            <List>{getRoutes(routes,isAdmin)}</List>
             <Divider />
   
           </Drawer>
@@ -50,6 +51,19 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
 }
 
 export default withStyles(sideMenustyles as any)(SideMenu);
+
+const getRoutes = (routes: any[], isAdmin: boolean)=>{
+    const routesLinks = routes.map((route:any, key: number)=> {
+        const link  =<SideLink route={route} key={key}/>;
+        if(route.role == 'admin'){
+            if(!isAdmin){
+                return null
+            }
+        }
+        return link;
+    });
+    return routesLinks;
+};
 
 const SideLink = ({route})=> <NavLink
 to={route.path}>
@@ -60,32 +74,3 @@ to={route.path}>
         <ListItemText primary={route.text} />
       </ListItem>
 </NavLink>
-
-// export const mainListItems = (
-//     <div>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <DashboardIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="داشبورد" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <PeopleIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="امتیازات" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <BarChartIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="بازی" />
-//       </ListItem>
-//       <ListItem button>
-//         <ListItemIcon>
-//           <LayersIcon />
-//         </ListItemIcon>
-//         <ListItemText primary="پنل مدیریت" />
-//       </ListItem>
-//     </div>
-//   );

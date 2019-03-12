@@ -1,5 +1,4 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
 import ReduxThunk from 'redux-thunk';
 import { IAppState } from './types';
 import { authenticate } from './reducers/authenticate';
@@ -19,5 +18,5 @@ const appState = combineReducers({
     authenticate
 });
 
-const middlewares = applyMiddleware(logger, ReduxThunk);
+const middlewares = applyMiddleware(ReduxThunk);
 export const store = createStore(appState,middlewares);

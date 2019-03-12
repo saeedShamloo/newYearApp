@@ -1,9 +1,14 @@
 import * as React from 'react';
-import {withStyles,AppBar,Toolbar,Typography,IconButton,Badge} from '@material-ui/core';
+import {withStyles,AppBar,Toolbar,Typography,IconButton} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import * as classNames from 'classnames';
 import { appBarStyles } from './DashbardJSS';
+import messages from "../../constants/messages";
+
+const styles = {
+    logOut: {transform: 'rotateY(180deg)'}
+};
 
 type HeaderClasses = {
     appBar: string,
@@ -26,9 +31,9 @@ class Header extends React.Component<HeaderProps, HeaderState>{
         super(props);
     }
     render(){
-        const {classes, open, handleDrawerOpen} = this.props;
+        const {classes, open, handleDrawerOpen, onLogout} = this.props;
         return (
-            <AppBar
+        <AppBar
           position="absolute"
           className={classNames(classes.appBar, open && classes.appBarShift)}
         >
@@ -49,10 +54,12 @@ class Header extends React.Component<HeaderProps, HeaderState>{
               variant="h6"
               color="inherit"
               noWrap
-              className={classes.title}
-            >
-              پروفایل کاربری
+              className={classes.title}>
+                {messages.userProfile}
             </Typography>
+              <IconButton color="inherit" style={styles.logOut} onClick={onLogout}>
+                  <ExitToAppIcon />
+              </IconButton>
           </Toolbar>
         </AppBar>
         );

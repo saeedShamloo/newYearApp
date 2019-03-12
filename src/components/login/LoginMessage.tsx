@@ -13,7 +13,7 @@ class LoginMessage extends React.Component<LoginMessagesProsp,Readonly<{}>>{
         const { classes } = this.props;
         return(
             <Paper elevation={1} className={classes.wrapper}>
-            <Typography variant="caption" align="center" className={classes.message}>
+            <Typography variant="subheading" align="center" className={classes.message}>
                نام کاربری و رمز عبور خودتو از مدیر سیستم می تونی بگیری
             </Typography>
         </Paper>

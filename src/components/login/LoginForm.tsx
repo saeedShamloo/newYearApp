@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Button, TextField, withStyles } from '@material-ui/core';
 import { BeatLoader } from 'react-spinners';
-import messages from '../../constants/messages';
 import { purple } from "@material-ui/core/colors";
+import { Button, TextField, withStyles } from '@material-ui/core';
+import messages from '../../constants/messages';
 
 export type LoginFormProps = {
     classes?: any,

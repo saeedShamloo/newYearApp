@@ -2,7 +2,31 @@
     loginError= 'یه چیزیو اشتباه زدی، دقت کن !!!',
     serverDown = 'سرور پوکیده،دوباره امتحان کن',
     startGame= 'بریم بازی !!!',
-    corebika = 'کوربیکا'
+    corebika = 'کوربیکا',
+     userProfile= 'پروفایل کاربری',
+     pariticipates = 'شرکت کننده ها :',
+     userScoreTitle= 'توی این قسمت امتیازهای خودتو میتونی ببینی',
+     scoreOfThisGame= 'امتیازت از این بازی',
+     lotteryTitle= 'ثبت نام در قرعه کشی جایزه یک میلیون تومانی',
+    completeInfo= 'تکمیل اطلاعات',
+    firstName= 'نام',
+     lastName= 'نام خانوادگی',
+    address= 'آدرس',
+    postalCode= 'کد پستی',
+     mobile='تلفن همراه',
+     email='پست الکترونیک',
+    nationalCode ='کد ملی',
+    responsibility= 'سمت',
+    personnelCode= 'کد پرسنلی',
+    unit= 'واحد',
+    experimentalPersonnel= 'اگر در دوره آزمایشی هستید تیک زیر را فعال کنید',
+    confirmInfo='ایا اطلاعات زیر مورد تایید شما می باشد؟',
+     back= 'برگشت',
+     registerFinal='ثبت نهایی',
+     next = 'مرحله بعد',
+     Boruz='[[-1552373915208]]-بعلت بروز برخي مشكلات در سيستم لطفا مجددا تلاش كنيد',
+    error='خطا',
+    close='بستن'
 }
 
 export default messages;

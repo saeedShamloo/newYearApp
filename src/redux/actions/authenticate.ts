@@ -1,9 +1,8 @@
-import Axios from 'axios';
 import labels from '../labels';
 import { User } from '../types/index';
-import messages from '../../constants/messages';
 import { loading } from './loading';
-import AuthService from '../../share/authenticate/AuthService';
+import AuthService from '../../utils/authenticate/AuthService';
+import history from '../../utils/history/history';
 
 export const authenticated = (user: User )=>({
     type: labels.AUTHENTICATED,
@@ -17,14 +16,14 @@ export const authenticatedError = (errorMessage: string)=>({
     errorMessage
 });
 
-export const authenticate = (payload : {name: string, password: string}, history: any[]) => {
+export const authenticate = (payload : {name: string, password: string}) => {
     return async(dispatch : any) => {
         dispatch(loading(true));
         const authService = new AuthService();
         authService.login(payload.name, payload.password)
         .then((resoonse: any)=> {
-            if(resoonse.error){
-                dispatch(authenticatedError(resoonse.errorMesage))
+            if(resoonse.hasError){
+                dispatch(authenticatedError(resoonse.message))
             }
             else{
                 dispatch(authenticated(resoonse.data[0] as User));

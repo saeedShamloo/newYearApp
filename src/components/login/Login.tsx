@@ -1,6 +1,6 @@
 import * as React from 'react';
 import LoginForm from './LoginForm';
-import {Typography, Paper, withStyles, Button} from '@material-ui/core';
+import {Typography, Paper, withStyles} from '@material-ui/core';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import { connect } from 'react-redux';
@@ -44,14 +44,14 @@ class Login extends React.Component < LoginProps, Readonly<{}> > {
                 name: Yup.string("")
                 .required("وارد کردن نام کاربری اجباری است"),
                 password: Yup.string("")
-                .min(6, "رمز عبور حداقل 6 کاراکتر می باشد")
+                .min(3, "رمز عبور حداقل 3 کاراکتر می باشد")
                 .required("وارد کردن رمز عبور اجباری است"),
             });
 
             return (
                 <Paper className={classes.container} elevation={0}>
-                    <Typography variant="h5" gutterBottom align="center" className={classes.title}>
-                            به اپلیکیشن کوربیکا خوش اومدی.
+                    <Typography variant="h4" gutterBottom align="center" className={classes.title}>
+                            به اپلیکیشن کربیکا خوش اومدی.
                     </Typography>
                     <Paper className={classes.formWrapper}>
                        <LoginMessage/>
@@ -73,7 +73,9 @@ const mapStateToProps = (appState: IAppState)=> ({
     error: appState.authenticate.error,
     loading: appState.loading
 });
+
 const mapDispatchToProps = (dispatch: any)=>({
-    handleLogin: (user: {name: string, password: string}, history: any[])=>  dispatch(authenticate(user, history))
+    handleLogin: (user: {name: string, password: string}, history: any[])=>  dispatch(authenticate(user))
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(LoginComp)

@@ -1,6 +1,7 @@
 import {grey} from '@material-ui/core/colors';
 import image from '../../../assets/images/bg7.jpg';
-export const styles : {[key : string] : React.CSSProperties} = {
+
+export const styles = {
     container: {
         minHeight: '100%',
         display: 'flex',
@@ -10,6 +11,7 @@ export const styles : {[key : string] : React.CSSProperties} = {
         backgroundImage: "url(" + image + ")",
         backgroundSize: "cover",
         backgroundPosition: "top center",
+        backgroundColor:'#888',
         padding: 10,
         boxSizing: 'border-box'
     },
@@ -19,7 +21,7 @@ export const styles : {[key : string] : React.CSSProperties} = {
         paddingTop: 50,
         // minHeight:250,
         position: 'relative',
-        maxWidth:320,
+        maxWidth:380,
     },
     title: {
         color: '#fff'

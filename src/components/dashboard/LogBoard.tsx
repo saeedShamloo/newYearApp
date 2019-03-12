@@ -9,15 +9,13 @@ import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Avatar from '@material-ui/core/Avatar';
-import SentimentIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import { request } from './../../constants/values';
 import { IAppState } from '../../redux/types/index';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import UpdateIcon from '@material-ui/icons/Update';
-import { baseURL, ReqWithLoadingAction } from '../../share/fetch/fetch';
+import { baseURL, ReqWithLoadingAction } from '../../utils/fetch/fetch';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import CommentIcon from '@material-ui/icons/Comment';
 import Button from '@material-ui/core/Button';
@@ -89,7 +87,7 @@ class LogBoard extends React.Component<LogBoardProps, LogBoardState>{
     }
 
     getPlayers = async ()=>{
-        const response: any = await ReqWithLoadingAction(request.get,`${baseURL}/topPlayers`);
+        const response: any = await ReqWithLoadingAction(request.get,true,`${baseURL}/topPlayers`);
         if(response.data.length){
             this.setState({ players: response.data })
         }

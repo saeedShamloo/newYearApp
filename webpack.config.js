@@ -35,9 +35,6 @@ module.exports = {
                             limit: 4000,
                             name: 'images/[name].[ext]'
                         }
-                    },
-                    {
-                        loader: 'image-webpack-loader'
                     }
                 ]
             },
@@ -60,6 +57,9 @@ module.exports = {
     devServer: {
         contentBase: './dist',
         historyApiFallback: true,
-        hot: true
+        hot: true,
+        proxy: {
+            '/auth': 'http://localhost:8080'
+        },
       },
 }
