@@ -23,14 +23,17 @@ export const mainStyles = theme => ({
             ]: {
             width: 900,
             marginLeft: 'auto',
-            marginRight: 'auto'
+            marginRight: 'auto',
         }
     },
     titleSection: {
         maxWidth: 680,
         margin: '0 auto 20px auto',
         paddingRight: 40,
-        position: 'relative'
+        position: 'relative',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 20,
+        },
     },
     winIcon: {
         verticalAlign: 'middle',
@@ -48,7 +51,7 @@ export const mainStyles = theme => ({
 
 export const cardStyles = theme => ({
     cardHeader: {
-        backgroundColor: theme.palette.grey[200]
+        backgroundColor: theme.palette.grey[200],
     },
     cardPricing: {
         display: 'flex',
@@ -81,6 +84,9 @@ export const playerStyle = () => ({
         height:25,
         width:25,
         background: blueGrey[800]
+    },
+    winnerItem: {
+      backgroundColor: grey[300]
     },
     playerName: {
         fontSize: '.8em'

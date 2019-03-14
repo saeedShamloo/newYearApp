@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CssBaseline,withStyles } from '@material-ui/core';
+import {CssBaseline, withStyles} from '@material-ui/core';
 import { dashboardStyles } from './DashbardJSS';
 import Header from './Header';
 import SideMenu from './SideMenu';

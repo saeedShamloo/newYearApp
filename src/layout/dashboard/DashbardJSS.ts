@@ -1,3 +1,5 @@
+import {grey} from "@material-ui/core/colors";
+
 const drawerWidth = 240;
 export const dashboardStyles = (theme: any) => ({
     root: {
@@ -6,7 +8,10 @@ export const dashboardStyles = (theme: any) => ({
     appBarSpacer: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing.unit * 2,
+      [theme.breakpoints.down('sm')]: {
+          padding: 0,
+        },
       height: '100vh',
       overflow: 'auto',
     },
@@ -80,4 +85,14 @@ export const sideMenustyles = (theme: any)=>({
         padding: '0 15px',
         ...theme.mixins.toolbar,
       },
+});
+
+export const sideLinkStyles = ()=>({
+    route: {
+        display: 'block',
+        textDecoration: 'none'
+    },
+    activeRoute:{
+        backgroundColor: grey[200]
+    }
 })

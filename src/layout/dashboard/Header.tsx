@@ -35,7 +35,7 @@ class Header extends React.Component<HeaderProps, HeaderState>{
         return (
         <AppBar
           position="absolute"
-          className={classNames(classes.appBar, open && classes.appBarShift)}
+          className={classNames(classes.appBar)}
         >
           <Toolbar disableGutters={!open} className={classes.toolbar}>
             <IconButton

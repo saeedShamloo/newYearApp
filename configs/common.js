@@ -10,7 +10,6 @@ module.exports = {
         publicPath: '/',
         filename: '[name].js'
     },
-
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     },

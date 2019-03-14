@@ -112,6 +112,7 @@ class AddGameChoice extends React.Component<AddGameChoiceProps, AddGameChoiceSta
                                 <Chip
                                     key={choice.value}
                                     label={choice.choice}
+                                    style={{marginBottom:5}}
                                     onDelete={()=> onDeleteChoice(choice.value)}
                                 />
                             );

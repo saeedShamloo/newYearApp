@@ -5,6 +5,7 @@ const merge = require('webpack-merge'),
 
 module.exports = merge(commonConfig, {
     mode: 'development',
+    devtool : 'source-map',
     plugins: [
         new webpack.HotModuleReplacementPlugin(), // enable HMR globally
     ],
@@ -13,7 +14,7 @@ module.exports = merge(commonConfig, {
         historyApiFallback: true,
         hot: true,
         proxy: {
-            '/auth': 'http://localhost:8080'
+            '/auth': 'http://localhost:9090'
         },
     },
 });

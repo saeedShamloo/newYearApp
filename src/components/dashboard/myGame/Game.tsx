@@ -8,18 +8,20 @@ import {
     CardHeader,
     CardActions,
     Button,
-    List,
+    List, Hidden,
 } from '@material-ui/core';
 import {request, urls} from '../../../constants/values';
 import {IAppState} from '../../../redux/types';
 import {connect} from 'react-redux';
 import UpdateIcon from '@material-ui/icons/Update';
-import {ReqWithLoadingAction} from '../../../utils/fetch/fetch';
+import {postRequest, ReqWithLoadingAction} from '../../../utils/fetch/fetch';
 import Loading from "../../share/Loading/Loading";
 import ChoiceItem from "./ChoiceItem";
 import {styles} from './gameJSS'
 import ConfirmDialog from "./ConfirmDialog";
 import Snack from "../../share/snack/Snack";
+import messages from "../../../constants/messages";
+import ErrorMessage from "../../share/messages/Error";
 
 export type GameProps = {
     classes: any,
@@ -27,11 +29,13 @@ export type GameProps = {
 };
 export type GameState = {
     dialogOpen: boolean,
-    checked: string,
+    vote: string,
+    gameId: string,
     game: any,
     registeringSurvey: boolean,
     openSnack: boolean,
-    surveyMessage: string
+    surveyMessage: string,
+    hasError: boolean
 };
 
 class Game extends React.Component<GameProps, GameState> {
@@ -40,12 +44,14 @@ class Game extends React.Component<GameProps, GameState> {
         super(props);
         this._isMounted = false;
         this.state = {
-            checked: '',
+            vote: '',
+            gameId: '',
             dialogOpen: false,
             game: null,
             registeringSurvey: false,
             surveyMessage: '',
-            openSnack: false
+            openSnack: false,
+            hasError: false
         };
     }
 
@@ -63,21 +69,30 @@ class Game extends React.Component<GameProps, GameState> {
         if (this._isMounted && response.data) {
             this.setState({
                 game: response.data.gameDefinition,
-                checked: '',
+                gameId: response.data.id,
+                vote: '',
                 dialogOpen: false,
+            })
+        }else {
+            this.setState({
+                game: {},
+                gameId: '',
+                vote: '',
+                dialogOpen: false,
+                hasError: true
             })
         }
     };
 
     handleToggle = (value: string) => () => {
-        const {checked} = this.state;
-        if (checked == value) {
+        const {vote} = this.state;
+        if (vote == value) {
             this.setState({
-                checked: '',
+                vote: '',
             });
         } else {
             this.setState({
-                checked: value,
+                vote: value,
             });
         }
     };
@@ -94,35 +109,38 @@ class Game extends React.Component<GameProps, GameState> {
 
     submitSurvey = async () => {
         this.setState({registeringSurvey: true});
-        setTimeout(()=>{
-            this.setState((prevState: GameState) => ({
-                ...prevState,
-                registeringSurvey: false,
-                dialogOpen: false,
-                openSnack: true,
-                surveyMessage: 'بازی اضافه شد'
-            }))
-        },2000)
-        // const response: any = await getRequest(`${baseURL}/commitSurvey`);
-        // if(response.data){
-        //       this.setState((prevState: GameState) => ({
-        //         ...prevState,
-        //           registeringSurvey: false,
-        //           dialogOpen: false,
-        //           openSnack: true,
-        //           surveyMessage: response.data.message
-        //     }))
-        // }else {
-        //
-        // }
+        const { gameId,vote } = this.state;
+        const response: any = await postRequest(urls.vote as string,true,{
+            vote,
+            gameId
+        });
+
+        let message= '';
+        if(response.data != undefined){
+           message = messages.submitVoteSuccessfully
+        }else{
+            message = response.error.response.data.message;
+        }
+
+        this.setState((prevState: GameState) => ({
+            ...prevState,
+            registeringSurvey: false,
+            dialogOpen: false,
+            openSnack: true,
+            surveyMessage: message
+        }))
     };
 
     render() {
         const {classes, loading} = this.props;
-        const {game} = this.state;
+        const {game, hasError} = this.state;
         if (loading) {
-            return <Loading loading={loading} size={20}/>
+            return <div style={{marginTop:20}}><Loading loading={loading} size={20}/></div>
         }
+        if(hasError){
+            return  <div style={{marginTop:20}}><ErrorMessage message={messages.thereIsNotActiveGame}/></div>
+        }
+
         return (
             <Grid container spacing={40} alignItems="flex-end">
                 <Grid item md={12} sm={12} xs={12}>
@@ -146,12 +164,12 @@ class Game extends React.Component<GameProps, GameState> {
                         <CardContent style={{flexGrow: 1, padding: 8}}>
                             <div className={classes.cardPricing}>
                                 <Typography variant="h6" color="textSecondary">
-                                    شرکت کننده ها :
+                                    {messages.choices}
                                 </Typography>
                             </div>
                             <List dense className={classes.root}>
                                 {game.choices.map((choice: any, index: number) => <ChoiceItem choice={choice}
-                                                                                              selected={this.state.checked == choice.value}
+                                                                                              selected={this.state.vote == choice.value}
                                                                                               onClick={this.handleToggle}
                                                                                               key={index}/>)}
                             </List>
@@ -159,10 +177,10 @@ class Game extends React.Component<GameProps, GameState> {
                         <CardActions className={classes.cardActions}>
                             <Button fullWidth
                                     variant={'contained'}
-                                    disabled={!this.state.checked}
+                                    disabled={!this.state.vote}
                                     color="primary"
                                     onClick={this.handleOpen}>
-                                ثبت
+                                {messages.submit}
                             </Button>
                         </CardActions>
                     </Card>

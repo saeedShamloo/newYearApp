@@ -2,6 +2,13 @@ import * as React from 'react';
 import {Snackbar} from "@material-ui/core";
 import {Slide} from "@material-ui/core/es";
 
+const styles = {
+    display: 'block',
+    textAlign:'center',
+    fontSize:14
+};
+
+
 export type SnackProps = {
     open: boolean,
     onClose: ()=> void,
@@ -17,6 +24,7 @@ function Snack(props: SnackProps) {
             TransitionComponent={TransitionUp}
             ContentProps={{
                 'aria-describedby': 'message-id',
+                'style': styles
             }}
             message={<span id="message-id">{message}</span>}
         />

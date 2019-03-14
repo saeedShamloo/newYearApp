@@ -7,11 +7,14 @@ export const styles = theme => ({
         marginBottom: theme.spacing.unit * 3,
         padding: theme.spacing.unit * 2,
         [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-            padding: theme.spacing.unit * 3,
+            padding: theme.spacing.unit * 2,
+        },
+        [theme.breakpoints.down('sm')]: {
+            margin:0
         },
     },
     stepper: {
-        padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`,
+        padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 3}px`,
     },
     buttons: {
         display: 'flex',

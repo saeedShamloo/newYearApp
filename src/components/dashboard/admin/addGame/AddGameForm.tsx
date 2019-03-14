@@ -24,12 +24,14 @@ class AddGameForm extends React.Component<AddGameFormProps, AddGameFormState>{
             values: {
                 name: '',
                 answer: '',
-                anticipateWinSoccer: '',
-                anticipateLoseSoccer: '',
+                anticipateWinScore: '',
+                anticipateLoseScore: '',
                 maxWinners: '',
                 description: '',
                 playersCount: '',
+                winnerScore: '',
                 isPhysicalGame: true,
+                maxWinners: 1
             },
             choices: [],
             isFetching: false
@@ -120,20 +122,57 @@ class AddGameForm extends React.Component<AddGameFormProps, AddGameFormState>{
                         </Grid>
                         {
                             values.isPhysicalGame &&
-                            <Grid item xs={12} sm={12}>
-                                <TextField
-                                    required
-                                    id="playersCount"
-                                    name="playersCount"
-                                    label="تعداد مسابقه دهندگان"
-                                    fullWidth
-                                    value={values.playersCount}
-                                    onChange={this.handleInputChange}
-                                />
-                            </Grid>
+                           <React.Fragment>
+                               <Grid item xs={12} sm={12}>
+                                   <TextField
+                                       required
+                                       id="playersCount"
+                                       name="playersCount"
+                                       label="تعداد مسابقه دهندگان"
+                                       fullWidth
+                                       value={values.playersCount}
+                                       onChange={this.handleInputChange}
+                                   />
+                               </Grid>
+                               <Grid item xs={12} sm={12}>
+                                   <TextField
+                                       required
+                                       id="winnerScore"
+                                       name="winnerScore"
+                                       label="امتیاز برنده"
+                                       fullWidth
+                                       type={'number'}
+                                       value={values.winnerScore}
+                                       onChange={this.handleInputChange}
+                                   />
+                               </Grid>
+                           </React.Fragment>
                         }
-                        {
-                            !values.isPhysicalGame &&
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                required
+                                id="anticipateWinScore"
+                                name="anticipateWinScore"
+                                label="امتیاز پیش بینی درست"
+                                fullWidth
+                                type={'number'}
+                                value={values.anticipateWinScore}
+                                onChange={this.handleInputChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                id="anticipateLoseScore"
+                                name="anticipateLoseScore"
+                                label="امتیاز شرکت در پیش بینی"
+                                fullWidth
+                                type={'number'}
+                                value={values.anticipateLoseScore}
+                                onChange={this.handleInputChange}
+                            />
+                        </Grid>
+                        { !values.isPhysicalGame &&
+                        <React.Fragment>
                             <Grid item xs={12} sm={12}>
                                 <TextField
                                     required
@@ -146,46 +185,10 @@ class AddGameForm extends React.Component<AddGameFormProps, AddGameFormState>{
                                     onChange={this.handleInputChange}
                                 />
                             </Grid>
-                        }
-
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                required
-                                id="anticipateWinSoccer"
-                                name="anticipateWinSoccer"
-                                label="امتیاز پیش بینی درست"
-                                fullWidth
-                                type={'number'}
-                                value={values.anticipateWinSoccer}
-                                onChange={this.handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                id="anticipateLoseSoccer"
-                                name="anticipateLoseSoccer"
-                                label="امتیاز شرکت در پیش بینی"
-                                fullWidth
-                                type={'number'}
-                                value={values.anticipateLoseSoccer}
-                                onChange={this.handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            {/*<TextField*/}
-                                {/*required*/}
-                                {/*id="maxWinners"*/}
-                                {/*name="maxWinners"*/}
-                                {/*label="حداکثر تعداد برندگان"*/}
-                                {/*fullWidth*/}
-                                {/*type={'number'}*/}
-                                {/*value={values.maxWinners}*/}
-                                {/*onChange={this.handleInputChange}*/}
-                            {/*/>*/}
-                        </Grid>
-                        { !values.isPhysicalGame && <AddGameChoice onAddGameChoice={this.handleAddChoice}
+                        <AddGameChoice onAddGameChoice={this.handleAddChoice}
                                                                    onDeleteChoice={this.handleDeleteChoice}
-                                                                   choices={choices}/> }
+                                                                   choices={choices}/>
+                        </React.Fragment>}
                         <Grid item xs={12} sm={12}>
                             <TextField
                                 required

@@ -2,26 +2,36 @@ import * as React from 'react';
 import MaterialTable from 'material-table';
 import AlarmIcon from '@material-ui/icons/AlarmOnOutlined';
 import SetWinnerIcon from '@material-ui/icons/Check';
+import BlockVoting from '@material-ui/icons/Block';
 import AddIcon from '@material-ui/icons/Add';
 import {Typography, Button, Dialog} from '@material-ui/core';
 import AddGameForm from "./addGame/AddGameForm";
 import Snack from "../../share/snack/Snack";
 import {getRequest, postRequest} from "../../../utils/fetch/fetch";
 import {urls} from "../../../constants/values";
-import Loading from "../../share/Loading/Loading";
+import messages from "../../../constants/messages";
+import SetWinnerDialog from "./SetWinnerDialog";
+import {Choice} from "./addGame/AddGameChoice";
 
 export type AdminProps = {};
 export type AdminState = {
     data: any[],
     openDialog: boolean,
     openSnack: boolean,
-    isFetching: boolean
+    isFetching: boolean,
+    errorMessage: string,
+    openErrorSnack: boolean,
+    openWinnerDialog: boolean,
+    winnerItem: {
+        choices: Choice[],
+        gameId: string
+    }
 }
 
 const styles = {
     cellStyle: {fontSize: '14px'},
     headerStyle: {fontSize: '16px'}
-}
+};
 
 class Admin extends React.Component <AdminProps, AdminState> {
     toolbar: any;
@@ -31,9 +41,16 @@ class Admin extends React.Component <AdminProps, AdminState> {
         this.state = {
             data: [],
             openDialog: false,
+            openWinnerDialog: false,
             openSnack: false,
-            isFetching: true
-        }
+            isFetching: true,
+            errorMessage: '',
+            openErrorSnack: false,
+            winnerItem: {
+                gameId: '',
+                choices: []
+            }
+        };
         this.toolbar = () => <TableToolbar handleAdd={this.handleAdd}/>
     }
 
@@ -41,14 +58,56 @@ class Admin extends React.Component <AdminProps, AdminState> {
         this.getGameList();
     }
 
-    handleSetWinner = (e: Event, rowData: any) => {
-        console.log(rowData);
+    /*================= finish game ====================*/
+    handleFinishGame = (e: Event, rowData: any) => {
+        const winnerItem = {
+            gameId: rowData.id,
+            choices: rowData.choices
+        };
+        this.setState({ winnerItem, openWinnerDialog:true })
     };
 
-    handleAcitve = async(e: Event, rowData: any) => {
+    closeWinnerDialog = (msg?: string)=>{
+        if(msg && typeof msg == "string"){
+            this.setState({ openErrorSnack: true, errorMessage: msg, openWinnerDialog: false })
+        }else{
+            this.setState({ openWinnerDialog: false })
+        }
+    };
+    /*============================================*/
+
+    handleActive = async(e: Event, rowData: any) => {
        const { id } = rowData;
+       this.setState({
+           isFetching: true
+       });
        const response = await postRequest(urls.startGame as string, true , {id});
-       console.log(response);
+       // TODO: change handleActive
+       this.setState((prevState: AdminState)=> ({
+           ...prevState,
+            isFetching: false,
+           errorMessage: response.hasError ? response.error.response.data.message : '',
+           openErrorSnack: response.hasError ? true : false
+       }))
+    };
+
+    handleFinishVoting = async(e:Event, rowData: any)=>{
+        this.setState({ isFetching: true });
+        const response = await postRequest(urls.finishVoting as string , true, {
+            id: rowData.id
+        });
+        let msg = '';
+
+        if(response.hasError){
+            msg = messages.generalError;
+        }else{
+            msg = messages.generalSuccess
+        }
+        this.setState({
+            isFetching: false,
+            openErrorSnack: true,
+            errorMessage: msg
+        })
     };
 
     getGameList = async()=>{
@@ -70,34 +129,34 @@ class Admin extends React.Component <AdminProps, AdminState> {
     };
 
     render() {
-        const { isFetching } = this.state;
+        const { isFetching, winnerItem } = this.state;
         const columns = [
             {
-                title: 'نام بازی',
+                title: messages.gameName,
                 field: 'name',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
-                title: 'توضیحات',
+                title: messages.description,
                 field: 'description',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
-                title: 'جواب صحیح',
+                title: messages.correctAnswer,
                 field: 'answer',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
-                title: 'تعداد شرکت کننده',
+                title: messages.playerCount,
                 field: 'playersCount',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
-                title: 'امتیاز برنده',
+                title: messages.winnerScore,
                 field: 'anticipateWinScore',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
@@ -106,21 +165,22 @@ class Admin extends React.Component <AdminProps, AdminState> {
         const actions = [
             {
                 icon: () => <AlarmIcon/>,
-                tooltip: 'فعال سازی',
-                onClick: this.handleAcitve
+                tooltip: messages.makeActive,
+                onClick: this.handleActive
+            },
+            {
+                icon: () => <BlockVoting />,
+                tooltip: messages.finishVoting,
+                onClick: this.handleFinishVoting
             },
             {
                 icon: () => <SetWinnerIcon/>,
-                tooltip: 'تعیین برنده',
-                onClick: this.handleSetWinner
+                tooltip: messages.setWinner,
+                onClick: this.handleFinishGame
             },
         ];
 
-        if(isFetching){
-            return (
-                <Loading loading={isFetching}/>
-            );
-        }
+        console.log(this.state);
 
         return (
             <React.Fragment>
@@ -131,18 +191,25 @@ class Admin extends React.Component <AdminProps, AdminState> {
                         toolbar: true,
                         header: true
                     }}
+                    isLoading={isFetching}
                     components={{
                         Toolbar: this.toolbar
                     }}
                     columns={columns}
                     data={this.state.data}
-                    title="لیست بازی ها"
+                    title= {messages.gameList}
                     actions={actions}/>
                 <Dialog open={this.state.openDialog} onClose={this.handleCloseAddForm}>
                     <AddGameForm onCloseDialog={this.handleShowSuccessMsg}/>
                 </Dialog>
+                <SetWinnerDialog choices={winnerItem.choices}
+                                 open={this.state.openWinnerDialog}
+                                 gameId={winnerItem.gameId}
+                                 onClose={this.closeWinnerDialog}/>
                 <Snack open={this.state.openSnack} onClose={() => this.setState({openSnack: false})}
-                       message={'بازی با موفقیت افزوده شد'}/>
+                       message={messages.addGameSuccess}/>
+                <Snack open={this.state.openErrorSnack} onClose={() => this.setState({openErrorSnack: false})}
+                       message={this.state.errorMessage}/>
             </React.Fragment>
         )
     }
@@ -153,10 +220,10 @@ export default Admin;
 const TableToolbar = (props: any) => {
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', padding: '10px 15px 0 15px'}}>
-            <Typography variant="h6"> لیست بازی ها </Typography>
+            <Typography variant="h6"> {messages.gameList} </Typography>
             <Button variant="outlined" size="small" color="primary" onClick={props.handleAdd}>
                 <AddIcon/>
             </Button>
         </div>
     );
-}
+};

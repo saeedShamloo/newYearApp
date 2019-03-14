@@ -1,8 +1,19 @@
 import * as React from 'react';
-import { Drawer, IconButton, Divider, List, withStyles, ListItem, ListItemIcon, ListItemText, ListSubheader, Typography } from '@material-ui/core';
+import {
+    Drawer,
+    IconButton,
+    Divider,
+    List,
+    withStyles,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Typography,
+    Hidden
+} from '@material-ui/core';
 import * as classNames from 'classnames';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { sideMenustyles } from './DashbardJSS';
+import { sideMenustyles,sideLinkStyles } from './DashbardJSS';
 import { NavLink } from "react-router-dom";
 import messages from '../../constants/messages';
 
@@ -28,33 +39,55 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
     render(){
         const {classes, open, handleDrawerClose, routes, isAdmin} = this.props;
         return(
-            <Drawer
-            variant="permanent"
-            classes={{
-              paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
-            }}
-            open={open}
-          >
-            <div className={classes.toolbarIcon}>
-                <Typography align='center' variant="h6">{messages.corebika}</Typography>
-              <IconButton onClick={handleDrawerClose}>
-                <ChevronRightIcon />
-              </IconButton>
-            </div>
-            <Divider />
-            <List>{getRoutes(routes,isAdmin)}</List>
-            <Divider />
-  
-          </Drawer>
+            <React.Fragment>
+            <Hidden smDown>
+                <Drawer
+                    onClose={handleDrawerClose}
+                variant="permanent"
+                classes={{
+                  paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
+                }}
+                open={open}>
+                <div className={classes.toolbarIcon}>
+                    <Typography align='center' variant="h6">{messages.corebika}</Typography>
+                  <IconButton onClick={handleDrawerClose}>
+                    <ChevronRightIcon />
+                  </IconButton>
+                </div>
+                <Divider />
+                <List>{getRoutes(routes,isAdmin, handleDrawerClose)}</List>
+                <Divider />
+              </Drawer>
+            </Hidden>
+                <Hidden smUp implementation={'css'}>
+                    <Drawer
+                        onClose={handleDrawerClose}
+                        classes={{
+                            paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
+                        }}
+                        variant="temporary"
+                        open={open}>
+                        <div className={classes.toolbarIcon}>
+                            <Typography align='center' variant="h6">{messages.corebika}</Typography>
+                            <IconButton onClick={handleDrawerClose}>
+                                <ChevronRightIcon/>
+                            </IconButton>
+                        </div>
+                        <Divider/>
+                        <List>{getRoutes(routes, isAdmin, handleDrawerClose)}</List>
+                        <Divider/>
+                    </Drawer>
+                </Hidden>
+            </React.Fragment>
         );
     }
 }
 
 export default withStyles(sideMenustyles as any)(SideMenu);
 
-const getRoutes = (routes: any[], isAdmin: boolean)=>{
+const getRoutes = (routes: any[], isAdmin: boolean, onClick: (()=>void))=>{
     const routesLinks = routes.map((route:any, key: number)=> {
-        const link  =<SideLink route={route} key={key}/>;
+        const link  =<SideLink route={route} key={key} onClick={onClick}/>;
         if(route.role == 'admin'){
             if(!isAdmin){
                 return null
@@ -65,12 +98,15 @@ const getRoutes = (routes: any[], isAdmin: boolean)=>{
     return routesLinks;
 };
 
-const SideLink = ({route})=> <NavLink
-to={route.path}>
-    <ListItem button>
+
+const SideLink = withStyles(sideLinkStyles)(({route, onClick, classes})=> <NavLink to={route.path}
+                                                                                   className={classes.route}
+                                                                                   activeClassName={classes.activeRoute}>
+    <ListItem button onClick={onClick}>
         <ListItemIcon>
          {React.createElement(route.icon)}
         </ListItemIcon>
         <ListItemText primary={route.text} />
       </ListItem>
-</NavLink>
+</NavLink>);
+

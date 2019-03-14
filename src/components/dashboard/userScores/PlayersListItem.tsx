@@ -25,7 +25,7 @@ export type PlayersListItemProps = {
 const PlayersListItem = (props: PlayersListItemProps)=>{
     const {player, classes} = props;
     return (
-        <ListItem button>
+        <ListItem className={player.winner ? classes.winnerItem : ''}>
             <ListItemAvatar>
                 { player.winner ?
                     <Avatar className={classes.avatar} src={winnerImage}/> :
@@ -33,7 +33,7 @@ const PlayersListItem = (props: PlayersListItemProps)=>{
             </ListItemAvatar>
             <ListItemText primary={player.name} className={classes.playerName}/>
             <ListItemSecondaryAction>
-                { player.winner ? <Checkbox checked={true} /> : null}
+                { player.winner ? <Checkbox checked={true} color={'primary'}/> : null}
             </ListItemSecondaryAction>
         </ListItem>
     )

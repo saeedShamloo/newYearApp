@@ -8,6 +8,7 @@ import {
     DialogTitle,
     Typography
 } from "@material-ui/core";
+import messages from "../../../constants/messages";
 
 export type ConfirmDialogProps = {
     open: boolean,
@@ -27,18 +28,18 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps, Readonly<{}>>{
                 disableEscapeKeyDown={registeringSurvey}
                 onClose={handleClose}
                 aria-labelledby="responsive-dialog-title">
-                <DialogTitle id="responsive-dialog-title">{"نظرت قطعیه ؟ "}</DialogTitle>
+                <DialogTitle id="responsive-dialog-title">{messages.areYouSure}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {registeringSurvey ? <React.Fragment>
                             <Typography variant="h6" component={'span'} color="textSecondary">
-                                لطفا منتظر باشید ....
+                                {messages.wait} ...
                             </Typography>
                             <Typography variant="subtitle1" component={'span'} color="textSecondary">
-                                رای شما در حال ثبت شدن در سیستم می باشد
+                                {messages.voteIsRegistering}
                             </Typography>
 
-                        </React.Fragment> : ' حواست باشه! رایی که میدی امکان تجدید نظر نداره.'}
+                        </React.Fragment> : messages.confirmVote }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -46,10 +47,10 @@ class ConfirmDialog extends React.Component<ConfirmDialogProps, Readonly<{}>>{
                         !registeringSurvey &&
                         <React.Fragment>
                             <Button  color="primary" onClick={submitSurvey}>
-                                ثبت کن
+                                {messages.submit}
                             </Button>
                             <Button onClick={handleClose} color="primary" autoFocus>
-                                پشیمون شدم
+                                {messages.cancel}
                             </Button>
                         </React.Fragment>
                     }

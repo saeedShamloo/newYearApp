@@ -1,15 +1,17 @@
 import UserScores from './components/dashboard/userScores/UserScores';
-import LogBoard from './components/dashboard/LogBoard';
+import ScoreBoard from './components/dashboard/scoreBoard/ScoreBoard';
 import Game from './components/dashboard/myGame/Game';
 import Help from './components/dashboard/Help';
 import Admin from './components/dashboard/admin/Admin';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
+import GameIcon from '@material-ui/icons/Gamepad';
+import PredictIcon from '@material-ui/icons/HowToVote';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 import SettingIcon from '@material-ui/icons/Settings';
 import MoodIcon from '@material-ui/icons/Mood';
 import Lottery from "./components/dashboard/lottery/Lottery";
+import Predict from "./components/dashboard/predict/Predict";
 
 const dashboardRoutes = [
     {
@@ -23,7 +25,7 @@ const dashboardRoutes = [
         {
         path: "/logBoard",
         name: "logBoard",
-        component: LogBoard,
+        component: ScoreBoard,
         icon: PeopleIcon,
         layout: "/dashboard",
         text: 'جدول نتایج'
@@ -32,7 +34,7 @@ const dashboardRoutes = [
         path: "/game",
         name: "game",
         component: Game,
-        icon: BarChartIcon,
+        icon: GameIcon,
         layout: "/dashboard",
         text: 'شروع بازی'
       }, 
@@ -43,6 +45,14 @@ const dashboardRoutes = [
         icon: MoodIcon,
         layout: "/dashboard",
         text: 'ثبت نام قرعه کشی'
+      },
+      {
+          path: "/predict",
+          name: "predict",
+          component: Predict,
+          icon: PredictIcon,
+          layout: "/dashboard",
+          text: 'پیش بینی'
       },
       {
         path: "/help",

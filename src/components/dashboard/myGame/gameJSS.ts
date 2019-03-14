@@ -1,11 +1,6 @@
-import {blueGrey} from "@material-ui/core/colors";
+import {blueGrey, indigo} from "@material-ui/core/colors";
 
 export const styles = (theme: any) => ({
-    '@global': {
-        body: {
-            backgroundColor: theme.palette.common.white,
-        },
-    },
     appBar: {
         position: 'relative',
     },
@@ -49,16 +44,18 @@ export const styles = (theme: any) => ({
         minWidth:40,
     },
     gameTitle: {
-        position: 'relative'
+        position: 'relative',
     },
-
-
 });
 
 export const playerNameStyle = ()=>({
     avatar: {
         alignItems: 'flex-start',
-        background: blueGrey[800]
+        background: blueGrey[700]
+    },
+    activeAvatar:{
+        alignItems: 'flex-start',
+        background: indigo[600]
     },
     playerName: {
         fontSize: '0.8em'

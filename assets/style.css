@@ -6,6 +6,13 @@ html, body {
 #root{
     height: 100%;
 }
+.route{
+    display: block;
+    text-decoration: none;
+}
+.activeRoute {
+    background: #ddd;
+}
 
 @font-face {
     font-family: 'byekan';

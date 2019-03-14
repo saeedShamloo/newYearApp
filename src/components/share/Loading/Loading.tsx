@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BeatLoader } from 'react-spinners';
-import {purple} from "@material-ui/core/colors";
+import {indigo} from "@material-ui/core/colors";
 
 const styles = {
     display: 'flex',
@@ -15,7 +15,7 @@ export type LoadingProps = {
 }
 
 function Loading(props: LoadingProps) {
-    const {size =10, color=purple[500],loading=false} = props;
+    const {size =10, color=indigo[800],loading=false} = props;
     return(
         <div style={styles}>
             <BeatLoader

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {Button, CssBaseline, Grid, Typography, withStyles} from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
-import {request} from '../../../constants/values';
+import {request, urls} from '../../../constants/values';
 import {baseURL, ReqWithLoadingAction} from '../../../utils/fetch/fetch';
 import {IAppState} from '../../../redux/types';
 import ScoreCard, {ScoreType} from "./ScoreCard";
@@ -31,7 +31,7 @@ class UserScores extends React.Component <UserScoresProps, UserScoresState> {
     }
 
     getScores = async () => {
-        const response: any = await ReqWithLoadingAction(request.get, true, `${baseURL}/games`);
+        const response: any = await ReqWithLoadingAction(request.get, true, urls.scores as string);
         if (response.data.length) {
             this.setState({scores: response.data})
         }
@@ -40,7 +40,7 @@ class UserScores extends React.Component <UserScoresProps, UserScoresState> {
     render() {
         const {classes, loading} = this.props;
         if (loading) {
-            return <Loading loading={loading} size={20}/>
+            return <div style={{marginTop:15}}><Loading loading={loading} size={20}/></div>
         }
         return (
             <React.Fragment>

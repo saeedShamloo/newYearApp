@@ -24,11 +24,11 @@ const ChoiceItem = (props:ChoiceItemProps)=>{
         <React.Fragment>
             <ListItem button onClick={onClick(choice.value)}>
                 <ListItemAvatar>
-                    <Avatar className={classes.avatar}>{choice.choice.charAt(0)}</Avatar>
+                    <Avatar className={ selected ? classes.activeAvatar :classes.avatar}>{choice.choice.charAt(0)}</Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={choice.choice} className={classes.playerName}/>
                 <ListItemSecondaryAction>
-                    <Checkbox checked={selected} />
+                    <Checkbox checked={selected} color={'primary'}/>
                 </ListItemSecondaryAction>
             </ListItem>
         </React.Fragment>
