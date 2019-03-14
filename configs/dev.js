@@ -14,7 +14,8 @@ module.exports = merge(commonConfig, {
         historyApiFallback: true,
         hot: true,
         proxy: {
-            '/auth': 'http://localhost:9090'
+            '/auth': 'http://localhost:9090',
+            '/api': 'http://localhost:9090',
         },
     },
 });

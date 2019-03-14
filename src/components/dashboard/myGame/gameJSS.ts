@@ -1,6 +1,13 @@
 import {blueGrey, indigo} from "@material-ui/core/colors";
 
 export const styles = (theme: any) => ({
+    gameItem: {
+        [theme.breakpoints.down('sm')]: {
+            marginTop: theme.spacing.unit * 2,
+            marginRight:theme.spacing.unit * 1,
+            marginLeft:theme.spacing.unit * 1,
+        },
+    },
     appBar: {
         position: 'relative',
     },
@@ -38,7 +45,7 @@ export const styles = (theme: any) => ({
     },
     refresh: {
         position: 'absolute',
-        top: 0,
+        top: -5,
         right:0,
         maxWidth:40,
         minWidth:40,

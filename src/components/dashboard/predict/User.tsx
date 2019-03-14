@@ -7,32 +7,33 @@ import {
     ListItemSecondaryAction,
     ListItemText
 } from "@material-ui/core";
+import {indigo} from "@material-ui/core/colors";
 
-export type User = {
-    firstName: string,
-    lastName: string,
-    userName: string,
+export type PredictType = {
+    choice: string,
+    id: number,
+    description: string
 }
 export type UserProps ={
-    user:User,
+    predict:PredictType,
     selected: boolean,
     onClick
 }
 
 export const User = (props: UserProps)=>{
-    const {user, onClick, selected} = props;
+    const {predict, onClick, selected} = props;
     return (
         <React.Fragment>
+            <Divider/>
             <ListItem button onClick={onClick}>
                 <ListItemAvatar>
-                    <Avatar>{user.firstName.charAt(0)}</Avatar>
+                    <Avatar style={{ backgroundColor: selected ? indigo[500] : '' }}>{predict.choice.charAt(0)}</Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`${user.firstName} ${user.lastName}`}/>
+                <ListItemText primary={predict.choice} secondary={predict.description}/>
                 <ListItemSecondaryAction>
                     <Checkbox checked={selected} color={'primary'}/>
                 </ListItemSecondaryAction>
             </ListItem>
-            <Divider/>
         </React.Fragment>
     );
 };

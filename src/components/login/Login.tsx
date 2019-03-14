@@ -8,6 +8,7 @@ import { styles } from './loginJSS';
 import LoginMessage from './LoginMessage';
 import { authenticate } from '../../redux/actions/authenticate';
 import { IAppState } from '../../redux/types';
+import messages from "../../constants/messages";
 
 export type LoginClassNames = {
     container: string,
@@ -51,7 +52,7 @@ class Login extends React.Component < LoginProps, Readonly<{}> > {
             return (
                 <Paper className={classes.container} elevation={0}>
                     <Typography variant="h4" gutterBottom align="center" className={classes.title}>
-                            به اپلیکیشن کربیکا خوش اومدی.
+                        {messages.welcome}
                     </Typography>
                     <Paper className={classes.formWrapper}>
                        <LoginMessage/>
@@ -75,7 +76,7 @@ const mapStateToProps = (appState: IAppState)=> ({
 });
 
 const mapDispatchToProps = (dispatch: any)=>({
-    handleLogin: (user: {name: string, password: string}, history: any[])=>  dispatch(authenticate(user))
+    handleLogin: (user: {name: string, password: string})=> dispatch(authenticate(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginComp)

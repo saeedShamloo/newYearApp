@@ -71,11 +71,12 @@ class SetWinnerDialog extends React.Component<SetWinnerDialogProps, SetWinnerDia
         this.setState({ isFetching: true });
         const response = await postRequest(urls.finishGame as string, true,{
             gameId,
-            winner: 'b.rahmati' // TODO: change using winner
+            winnerId : winner as string
         });
         this.setState({ isFetching: false,winner:0 });
         if(response.hasError){
-            onClose(messages.generalError)
+            const msg = response.error.response.data.message;
+            onClose(msg)
         }else{
             onClose(messages.generalSuccess);
         }

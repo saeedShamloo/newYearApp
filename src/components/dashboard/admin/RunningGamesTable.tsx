@@ -1,19 +1,16 @@
 import * as React from 'react';
 import MaterialTable from 'material-table';
-import AlarmIcon from '@material-ui/icons/AlarmOnOutlined';
-import AddIcon from '@material-ui/icons/Add';
-import {Typography, Button, Dialog} from '@material-ui/core';
-import AddGameForm from "./addGame/AddGameForm";
+import SetWinnerIcon from '@material-ui/icons/Check';
+import BlockVoting from '@material-ui/icons/Block';
 import Snack from "../../share/snack/Snack";
 import {getRequest, postRequest} from "../../../utils/fetch/fetch";
 import {urls} from "../../../constants/values";
 import messages from "../../../constants/messages";
+import SetWinnerDialog from "./SetWinnerDialog";
 import {Choice} from "./addGame/AddGameChoice";
-import PredictButtons from "./PredictButtons";
-import RunningGamesTable from "./RunningGamesTable";
 
-export type AdminProps = {};
-export type AdminState = {
+export type RunningGamesTableProps = {};
+export type RunningGamesTableState = {
     data: any[],
     openDialog: boolean,
     openSnack: boolean,
@@ -32,11 +29,9 @@ const styles = {
     headerStyle: {fontSize: '16px'}
 };
 
-class Admin extends React.Component <AdminProps, AdminState> {
-    toolbar: any;
-    runningTableRef= React.createRef();
+class RunningGamesTable extends React.Component <RunningGamesTableProps, RunningGamesTableState> {
 
-    constructor(props: AdminProps) {
+    constructor(props: RunningGamesTableProps) {
         super(props);
         this.state = {
             data: [],
@@ -51,21 +46,38 @@ class Admin extends React.Component <AdminProps, AdminState> {
                 choices: []
             }
         };
-        this.toolbar = () => <TableToolbar handleAdd={this.handleAdd}/>
     }
 
     componentDidMount(){
         this.getGameList();
     }
 
+    /*================= finish game ====================*/
+    handleFinishGame = (e: Event, rowData: any) => {
+        const winnerItem = {
+            gameId: rowData.id,
+            choices: rowData.gameDefinition.choices
+        };
+        this.setState({ winnerItem, openWinnerDialog:true })
+    };
+
+    closeWinnerDialog = (msg?: string)=>{
+        if(msg && typeof msg == "string"){
+            this.setState({ openErrorSnack: true, errorMessage: msg, openWinnerDialog: false });
+            this.getGameList();
+        }else{
+            this.setState({ openWinnerDialog: false })
+        }
+    };
     /*============================================*/
-    handleActive = async(e: Event, rowData: any) => {
-       const { id } = rowData;
-       this.setState({
-           isFetching: true
-       });
-       const response = await postRequest(urls.startGame as string, true , {id});
+
+    handleFinishVoting = async(e:Event, rowData: any)=>{
+        this.setState({ isFetching: true });
+        const response = await postRequest(urls.finishVoting as string , true, {
+            id: rowData.id
+        });
         let msg = '';
+
         if(response.hasError){
             msg = response.error.response.data.message;
         }else{
@@ -76,11 +88,12 @@ class Admin extends React.Component <AdminProps, AdminState> {
             openErrorSnack: true,
             errorMessage: msg
         });
-        this.runningTableRef.current.getGameList();
+        this.getGameList();
     };
 
     getGameList = async()=>{
-        const response = await getRequest(urls.gameList as string,true);
+        this.setState({isFetching: true});
+        const response = await getRequest(urls.runningGameList as string,true);
         this.setState({ isFetching: false,data:response.data});
     };
 
@@ -88,21 +101,8 @@ class Admin extends React.Component <AdminProps, AdminState> {
         this.setState({openDialog: true})
     };
 
-    handleCloseAddForm = () => {
-        this.setState({openDialog: false});
-    };
-
-    handleShowSuccessMsg = () => {
-        this.setState({openDialog: false, openSnack: true});
-        this.getGameList();
-    };
-
-    showPredictMessage = (msg: string)=>{
-        this.setState({ openErrorSnack: true, errorMessage: msg })
-    };
-
     render() {
-        const { isFetching } = this.state;
+        const { isFetching, winnerItem } = this.state;
         const columns = [
             {
                 title: messages.gameName,
@@ -112,39 +112,46 @@ class Admin extends React.Component <AdminProps, AdminState> {
             },
             {
                 title: messages.description,
-                field: 'description',
+                field: 'gameDefinition.description',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
                 title: messages.correctAnswer,
-                field: 'answer',
+                field: 'gameDefinition.answer',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
                 title: messages.playerCount,
-                field: 'playersCount',
+                field: 'gameDefinition.playersCount',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
             {
                 title: messages.winnerScore,
-                field: 'anticipateWinScore',
+                field: 'gameDefinition.anticipateWinScore',
                 cellStyle: styles.cellStyle,
                 headerStyle: styles.headerStyle
             },
         ];
         const actions = [
-            {
-                icon: () => <AlarmIcon/>,
-                tooltip: messages.makeActive,
-                onClick: this.handleActive
-            },
+            (rowData: any)=>({
+                icon: () => <BlockVoting/>,
+                tooltip: messages.finishVoting,
+                onClick: this.handleFinishVoting,
+                disabled: rowData.votingClosed == true
+            }),
+            (rowData: any)=>({
+                icon: () => <SetWinnerIcon/>,
+                tooltip: messages.setWinner,
+                onClick: this.handleFinishGame,
+                disabled: rowData.votingClosed == false || rowData.finished == true
+            }),
         ];
 
         return (
-            <React.Fragment>
+            <div style={{marginTop: 15}}>
                 <MaterialTable
                     options={{
                         search: false,
@@ -153,36 +160,21 @@ class Admin extends React.Component <AdminProps, AdminState> {
                         header: true
                     }}
                     isLoading={isFetching}
-                    components={{
-                        Toolbar: this.toolbar
-                    }}
                     columns={columns}
                     data={this.state.data}
-                    title= {messages.gameList}
+                    title= {messages.runningGameList}
                     actions={actions}/>
-                <RunningGamesTable ref={this.runningTableRef}/>
-                <PredictButtons showPredictMessage={this.showPredictMessage}/>
-                <Dialog open={this.state.openDialog} onClose={this.handleCloseAddForm}>
-                    <AddGameForm onCloseDialog={this.handleShowSuccessMsg}/>
-                </Dialog>
+                <SetWinnerDialog choices={winnerItem.choices}
+                                 open={this.state.openWinnerDialog}
+                                 gameId={winnerItem.gameId}
+                                 onClose={this.closeWinnerDialog}/>
                 <Snack open={this.state.openSnack} onClose={() => this.setState({openSnack: false})}
                        message={messages.addGameSuccess}/>
                 <Snack open={this.state.openErrorSnack} onClose={() => this.setState({openErrorSnack: false})}
                        message={this.state.errorMessage}/>
-            </React.Fragment>
+            </div>
         )
     }
 }
 
-export default Admin;
-
-const TableToolbar = (props: any) => {
-    return (
-        <div style={{display: 'flex', justifyContent: 'space-between', padding: '10px 15px 0 15px'}}>
-            <Typography variant="h6"> {messages.gameList} </Typography>
-            <Button variant="outlined" size="small" color="primary" onClick={props.handleAdd}>
-                <AddIcon/>
-            </Button>
-        </div>
-    );
-};
+export default RunningGamesTable;

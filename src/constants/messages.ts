@@ -53,7 +53,14 @@ enum messages {
     score = 'امتیاز',
     scoreBoard = 'جدول نتایج',
     startPredict= 'شروع پیش بینی',
-    finishPredict = 'پایان پیش بینی'
+    finishPredict = 'پایان پیش بینی',
+    welcome = 'به اپلیکیشن کربیکا خوش اومدی',
+    user= 'کاربر',
+    refresh= 'به روزرسانی',
+    surverySumit= 'رای شما با موفقیت ثبت شد',
+    surveys = 'مجموع آرا',
+    thereIsNoSurvey= 'پیش بینی فعالی وجود ندارد',
+    runningGameList = 'لیست بازی های فعال'
 }
 
 export default messages;

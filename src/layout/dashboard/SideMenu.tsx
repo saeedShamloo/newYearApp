@@ -25,6 +25,7 @@ type SideMenuClasses = {
 
 export type SideMenuProps = {
     classes: SideMenuClasses,
+    user: string,
     open: boolean,
     handleDrawerClose: ()=> void,
     routes: any[],
@@ -37,7 +38,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
         super(props);
     }
     render(){
-        const {classes, open, handleDrawerClose, routes, isAdmin} = this.props;
+        const {classes, open, handleDrawerClose, routes, isAdmin, user} = this.props;
         return(
             <React.Fragment>
             <Hidden smDown>
@@ -49,7 +50,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
                 }}
                 open={open}>
                 <div className={classes.toolbarIcon}>
-                    <Typography align='center' variant="h6">{messages.corebika}</Typography>
+                    <Typography align='center' variant="h6">{user}</Typography>
                   <IconButton onClick={handleDrawerClose}>
                     <ChevronRightIcon />
                   </IconButton>
@@ -68,7 +69,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
                         variant="temporary"
                         open={open}>
                         <div className={classes.toolbarIcon}>
-                            <Typography align='center' variant="h6">{messages.corebika}</Typography>
+                            <Typography align='center' variant="h6">{messages.user} : {user}</Typography>
                             <IconButton onClick={handleDrawerClose}>
                                 <ChevronRightIcon/>
                             </IconButton>

@@ -57,7 +57,6 @@ export const cardStyles = theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'baseline',
-        marginBottom: theme.spacing.unit * 1
     },
     avatar: {
         height:25,

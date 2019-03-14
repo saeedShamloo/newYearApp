@@ -48,33 +48,32 @@ class PredictButtons extends React.Component<PredictButtonsProps, PredictButtons
 
     handleStart = async () => {
         const {showPredictMessage} = this.props;
-        this.setState({ isFetching: true });
-        // const response = await postRequest(urls.startPredict as string, true);
-        // let msg = '';
-        // if (response.data) {
-        //
-        // } else {
-        //
-        // }
-        setTimeout(()=>{
-            this.setState({isFetching: false});
-            showPredictMessage(messages.generalSuccess)
-        }, 2000)
+        this.setState({isFetching: true});
+        const response = await postRequest(urls.startSurvey as string, true,{id: 1 as string});
+        let msg = '';
+        if (response.hasError) {
+            msg = response.error.response.data.message;
+        } else {
+            msg = messages.generalSuccess
+        }
+        this.setState({isFetching: false});
+        showPredictMessage(msg)
     };
+
     handleFinish = async () => {
         const {showPredictMessage} = this.props;
         this.setState({ isFetching: true });
-        // const response = await postRequest(urls.startPredict as string, true);
-        // let msg = '';
-        // if (response.data) {
-        //
-        // } else {
-        //
-        // }
-        setTimeout(()=>{
-            this.setState({isFetching: false});
-            showPredictMessage(messages.generalError)
-        }, 2000);
+        const response = await postRequest(urls.finishSurvey as string, true , {
+            id: '1'
+        });
+        let msg = '';
+        if (response.hasError) {
+            msg = response.error.response.data.message;
+        } else {
+            msg = messages.generalSuccess
+        }
+        this.setState({isFetching: false});
+        showPredictMessage(msg)
     };
 
     render(){

@@ -52,13 +52,12 @@ class LogBoard extends React.Component<LogBoardProps, LogBoardState>{
                     <Button variant="contained"
                             onClick={this.getPlayers}
                             color="primary" className={classes.button + ' ' + classes.refresh}>
-                        <UpdateIcon className={classes.rightIcon} />
+                        <UpdateIcon/>
                     </Button>
                     <List className={classes.list}>
                         {this.state.players.map((player:Player, index: number) => <ScoreItem key={index} player={player}/>)}
                     </List>
                 </Paper>
-
             </React.Fragment>
         )
     }

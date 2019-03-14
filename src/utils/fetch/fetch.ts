@@ -33,7 +33,7 @@ export const getRequest = async (url: string, validateToken:boolean,params: { [k
     }
     let response = {};
     try {
-        response = await Axios.get(url, { params: params});
+        response = await Axios.get(url, { params: params, headers:  getAuthorizationHeader()});
     } catch (e) {
         response = {hasError: true, error: e}
     }

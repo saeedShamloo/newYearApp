@@ -26,7 +26,6 @@ export default class AuthService {
         if(response.data){
             const token = response.data['access_token'];
             this.setToken(token);
-
             // TODO: remove hardCode
             response.user = adminUser;
         }else {

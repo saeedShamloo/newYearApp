@@ -21,6 +21,7 @@ type HeaderClasses = {
 
 export type HeaderProps = {
     classes: HeaderClasses,
+    user: string,
     open: boolean,
     handleDrawerOpen: ()=> void
 };
@@ -31,7 +32,7 @@ class Header extends React.Component<HeaderProps, HeaderState>{
         super(props);
     }
     render(){
-        const {classes, open, handleDrawerOpen, onLogout} = this.props;
+        const {classes, open, handleDrawerOpen, onLogout, user} = this.props;
         return (
         <AppBar
           position="absolute"

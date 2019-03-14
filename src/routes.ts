@@ -7,11 +7,13 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import GameIcon from '@material-ui/icons/Gamepad';
 import PredictIcon from '@material-ui/icons/HowToVote';
+import PredictResultIcon from '@material-ui/icons/Visibility';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 import SettingIcon from '@material-ui/icons/Settings';
 import MoodIcon from '@material-ui/icons/Mood';
 import Lottery from "./components/dashboard/lottery/Lottery";
 import Predict from "./components/dashboard/predict/Predict";
+import PredictResult from './components/dashboard/predict/result/PredictResult';
 
 const dashboardRoutes = [
     {
@@ -54,6 +56,14 @@ const dashboardRoutes = [
           layout: "/dashboard",
           text: 'پیش بینی'
       },
+    {
+        path: "/predictResult",
+        name: "predictResult",
+        component: PredictResult,
+        icon: PredictResultIcon,
+        layout: "/dashboard",
+        text: 'نتایج پیش بینی'
+    },
       {
         path: "/help",
         name: "help",

@@ -16,7 +16,8 @@ type DashboardClasses = {
 }
 export type DashboardProps = {
     classes: DashboardClasses,
-    location: any
+    location: any,
+    user: string
 };
 export type DashboardState = {
     open: boolean
@@ -72,8 +73,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState>{
         return (
           <div className={classes.root}>
             <CssBaseline />
-            <Header open={this.state.open} handleDrawerOpen={this.handleDrawerOpen} onLogout={this.handleLogOut}/>
-            <SideMenu open={this.state.open} handleDrawerClose={this.handleDrawerClose} routes={routes} isAdmin={isAdmin}/>
+            <Header open={this.state.open} handleDrawerOpen={this.handleDrawerOpen} onLogout={this.handleLogOut} user={user}/>
+            <SideMenu open={this.state.open} handleDrawerClose={this.handleDrawerClose} routes={routes} isAdmin={isAdmin} user={user}/>
             <main className={classes.content}>
              <div className={classes.appBarSpacer} />
                {switchRoutes(isAdmin)}

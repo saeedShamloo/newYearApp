@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import {
-    Typography,
+import {Typography,
     Card,
     Grid,
     CardContent,
     CardHeader,
     CardActions,
     Button,
-    List, Hidden,
+    List,
 } from '@material-ui/core';
 import {request, urls} from '../../../constants/values';
 import {IAppState} from '../../../redux/types';
@@ -21,7 +20,7 @@ import {styles} from './gameJSS'
 import ConfirmDialog from "./ConfirmDialog";
 import Snack from "../../share/snack/Snack";
 import messages from "../../../constants/messages";
-import ErrorMessage from "../../share/messages/Error";
+import ThereIsNoGame from "./ThereIsNotGame";
 
 export type GameProps = {
     classes: any,
@@ -138,14 +137,14 @@ class Game extends React.Component<GameProps, GameState> {
             return <div style={{marginTop:20}}><Loading loading={loading} size={20}/></div>
         }
         if(hasError){
-            return  <div style={{marginTop:20}}><ErrorMessage message={messages.thereIsNotActiveGame}/></div>
+            return  <ThereIsNoGame onRefresh={this.getActiveGame}/>
         }
 
         return (
-            <Grid container spacing={40} alignItems="flex-end">
+            <Grid container spacing={0} alignItems="flex-end">
                 <Grid item md={12} sm={12} xs={12}>
                     {game &&
-                    <Card>
+                    <Card className={classes.gameItem}>
                         <CardHeader
                             title={
                                 <div className={classes.gameTitle}>
@@ -157,7 +156,7 @@ class Game extends React.Component<GameProps, GameState> {
                                 </div>
                             }
                             subheader={game.description}
-                            titleTypographyProps={{align: 'center'}}
+                            titleTypographyProps={{align: 'center',gutterBottom:true}}
                             subheaderTypographyProps={{align: 'center'}}
                             className={classes.cardHeader}
                         />

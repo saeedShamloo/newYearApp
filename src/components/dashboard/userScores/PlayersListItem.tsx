@@ -11,29 +11,26 @@ import {
 import winnerImage from '../../../../assets/images/tim_80x80.png';
 import ImageIcon from '@material-ui/icons/PermIdentity';
 import { playerStyle } from './userScoreJSS';
-
-export type Player = {
-    winner: boolean,
-    name: string
-}
+import {Choice} from "../admin/addGame/AddGameChoice";
 
 export type PlayersListItemProps = {
-    player: Player,
-    classes?: any
+    choice: Choice,
+    classes?: any,
+    isWinner: boolean
 }
 
 const PlayersListItem = (props: PlayersListItemProps)=>{
-    const {player, classes} = props;
+    const {choice, classes, isWinner} = props;
     return (
-        <ListItem className={player.winner ? classes.winnerItem : ''}>
+        <ListItem className={isWinner ? classes.winnerItem : ''}>
             <ListItemAvatar>
-                { player.winner ?
+                { isWinner ?
                     <Avatar className={classes.avatar} src={winnerImage}/> :
                     <Avatar className={classes.avatar}><ImageIcon/></Avatar>}
             </ListItemAvatar>
-            <ListItemText primary={player.name} className={classes.playerName}/>
+            <ListItemText primary={choice.choice} className={classes.playerName}/>
             <ListItemSecondaryAction>
-                { player.winner ? <Checkbox checked={true} color={'primary'}/> : null}
+                { isWinner ? <Checkbox checked={true} color={'primary'}/> : null}
             </ListItemSecondaryAction>
         </ListItem>
     )
