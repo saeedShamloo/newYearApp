@@ -16,5 +16,6 @@ export enum urls {
     finishVoting = urls.game + '/admin/finish-voting',
     finishGame = urls.gameDef + '/admin/finish',
     scoreBoard= urls.game + '/scoreboard',
-    scores = urls.game + '/scores'
+    scores = urls.game + '/scores',
+    startPredict = ''
 }

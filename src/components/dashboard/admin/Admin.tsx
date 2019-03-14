@@ -12,6 +12,7 @@ import {urls} from "../../../constants/values";
 import messages from "../../../constants/messages";
 import SetWinnerDialog from "./SetWinnerDialog";
 import {Choice} from "./addGame/AddGameChoice";
+import PredictButtons from "./PredictButtons";
 
 export type AdminProps = {};
 export type AdminState = {
@@ -128,6 +129,10 @@ class Admin extends React.Component <AdminProps, AdminState> {
         this.getGameList();
     };
 
+    showPredictMessage = (msg: string)=>{
+        this.setState({ openErrorSnack: true, errorMessage: msg })
+    };
+
     render() {
         const { isFetching, winnerItem } = this.state;
         const columns = [
@@ -180,8 +185,6 @@ class Admin extends React.Component <AdminProps, AdminState> {
             },
         ];
 
-        console.log(this.state);
-
         return (
             <React.Fragment>
                 <MaterialTable
@@ -199,6 +202,7 @@ class Admin extends React.Component <AdminProps, AdminState> {
                     data={this.state.data}
                     title= {messages.gameList}
                     actions={actions}/>
+                <PredictButtons showPredictMessage={this.showPredictMessage}/>
                 <Dialog open={this.state.openDialog} onClose={this.handleCloseAddForm}>
                     <AddGameForm onCloseDialog={this.handleShowSuccessMsg}/>
                 </Dialog>

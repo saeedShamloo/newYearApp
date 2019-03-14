@@ -51,7 +51,9 @@ enum messages {
     generalError = 'خطایی رخ داده است !!! دوباره سعی کنید',
     generalSuccess = 'عملیات با موفقیت انجام شد',
     score = 'امتیاز',
-    scoreBoard = 'جدول نتایج'
+    scoreBoard = 'جدول نتایج',
+    startPredict= 'شروع پیش بینی',
+    finishPredict = 'پایان پیش بینی'
 }
 
 export default messages;
