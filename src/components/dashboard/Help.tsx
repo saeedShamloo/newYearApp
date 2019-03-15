@@ -64,12 +64,6 @@ class Help extends React.Component<HelpProps, Readonly<{}>>{
                 <ListItemIcon className={classes.listIcon}>
                 <StarIcon />
                 </ListItemIcon>
-                <ListItemText primary="گرافیک جذابی داشته باشه" />
-            </ListItem>
-            <ListItem >
-                <ListItemIcon className={classes.listIcon}>
-                <StarIcon />
-                </ListItemIcon>
                 <ListItemText  primary="هوش مصنوعی داشته باشه" />
             </ListItem>
             <ListItem >
@@ -84,6 +78,36 @@ class Help extends React.Component<HelpProps, Readonly<{}>>{
                 </ListItemIcon>
                 <ListItemText  primary="به افزایش اطلاعات عمومی کاربرامون کمک کنه" />
             </ListItem>
+                <ListItem >
+                    <ListItemIcon className={classes.listIcon}>
+                        <StarIcon />
+                    </ListItemIcon>
+                    <ListItemText  primary="مشکل پیدا کردن جای پارک رو حل کنه" />
+                </ListItem>
+                <ListItem >
+                    <ListItemIcon className={classes.listIcon}>
+                        <StarIcon />
+                    </ListItemIcon>
+                    <ListItemText  primary="مشکل بسته بودن همیشگی دستشویی های core رو حل کنه" />
+                </ListItem>
+                <ListItem >
+                    <ListItemIcon className={classes.listIcon}>
+                        <StarIcon />
+                    </ListItemIcon>
+                    <ListItemText  primary="کمک کنه بعضی ها پوست بهتری داشته باشن!!!" />
+                </ListItem>
+                <ListItem >
+                    <ListItemIcon className={classes.listIcon}>
+                        <StarIcon />
+                    </ListItemIcon>
+                    <ListItemText  primary="مشکل پیدا نشدن نون موقع ناهار رو حل کنه" />
+                </ListItem>
+                <ListItem >
+                    <ListItemIcon className={classes.listIcon}>
+                        <StarIcon />
+                    </ListItemIcon>
+                    <ListItemText  primary="جلوی بروزهای FCB رو بگیره" />
+                </ListItem>
             <ListItem >
                 <ListItemIcon className={classes.listIcon}>
                 <StarIcon />
@@ -100,25 +124,13 @@ class Help extends React.Component<HelpProps, Readonly<{}>>{
                 <ListItemIcon className={classes.listIcon}>
                 <StarIcon />
                 </ListItemIcon>
-                <ListItemText  primary="به کاهش آلودگی هوای کمک کنه" />
+                <ListItemText  primary="به کاهش آلودگی هوا کمک کنه" />
             </ListItem>
             <ListItem >
                 <ListItemIcon className={classes.listIcon}>
                 <StarIcon />
                 </ListItemIcon>
                 <ListItemText  primary="بشه باهاش بلیط هواپیما و قطار رزرو کرد" />
-            </ListItem>
-            <ListItem >
-                <ListItemIcon className={classes.listIcon}>
-                <StarIcon />
-                </ListItemIcon>
-                <ListItemText  primary="مشکل پیدا کردن جای پارک رو حل کنه" />
-            </ListItem>
-            <ListItem >
-                <ListItemIcon className={classes.listIcon}>
-                <StarIcon />
-                </ListItemIcon>
-                <ListItemText  primary="جلوی بروزهای FCB رو بگیره" />
             </ListItem>
             <ListItem >
                 <ListItemIcon className={classes.listIcon}>
@@ -136,7 +148,7 @@ class Help extends React.Component<HelpProps, Readonly<{}>>{
                 <ListItemText  primary="و..." />
             </ListItem>
             </List>
-            ولی وقتی نوبت به پیاده سازی رسید متوجه شدیم که چهار پنج روز بیشتر زمان نداریم،برا همین تصمیم گرفتیم فعلا یه نسخه اولیه رو به جشن برسونیم و بعدا به مرور زمان اپلیکیشنمونو کاملو کامل تر کنیم.از لیستی که چندخط بالاتر ذکر کردم تقریبا هیچکدومشو نرسیدیم پیاده کنیم، اما یه سری کارای باحال هم انجام دادیم که شاید خوشتون بیاد.
+            ولی وقتی نوبت به پیاده سازی رسید متوجه شدیم که چهار پنج روز بیشتر زمان نداریم،برا همین تصمیم گرفتیم فعلا یه نسخه اولیه رو به جشن برسونیم و بعدا به مرور زمان اپلیکیشنمونو کاملو کامل تر کنیم.از لیستی که چندخط بالاتر ذکر کردم هیچکدومشو نرسیدیم پیاده کنیم و فقط برای چند موردش یه سری کلیپ تبلیغتی بامزه (البته بامزه از نظرخودمون) درست کردیم،اما یه سری کارای باحال هم انجام دادیم که شاید خوشتون بیاد.
             <br/>
             <span className={classes.corbikaListTitle}>خب حالا با این کربیکا چیکارا می شه کرد ؟ </span>
             <List >
