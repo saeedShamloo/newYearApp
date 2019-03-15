@@ -20,25 +20,32 @@ export type UserScoresProps = {
     loading?: boolean
 };
 export type UserScoresState = {
-    scores: any[]
+    scores: any[],
 };
 
 class UserScores extends React.Component <UserScoresProps, UserScoresState> {
+    _isMounted: boolean;
     constructor(props: UserScoresProps) {
         super(props);
+        this._isMounted = false;
         this.state = {
             scores: [],
         }
     }
 
     async componentDidMount() {
+        this._isMounted = true;
         this.getScores();
+    }
+
+    componentWillUnmount(){
+        this._isMounted = false;
     }
 
     getScores = async () => {
         const response: any = await ReqWithLoadingAction(request.get, true, urls.scores as string);
         const scores = response.data;
-        if(Array.isArray(scores)){
+        if(this._isMounted && Array.isArray(scores)){
             this.setState({scores})
         }
     };
@@ -46,7 +53,7 @@ class UserScores extends React.Component <UserScoresProps, UserScoresState> {
     render() {
         const {classes, loading} = this.props;
         const { scores } = this.state;
-        if (loading) {
+        if (loading || !this._isMounted) {
             return <div style={{marginTop:15}}><Loading loading={loading} size={20}/></div>
         }
         return (
