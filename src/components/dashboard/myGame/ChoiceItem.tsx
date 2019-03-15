@@ -28,7 +28,7 @@ const ChoiceItem = (props:ChoiceItemProps)=>{
                 </ListItemAvatar>
                 <ListItemText primary={choice.choice} className={classes.playerName}/>
                 <ListItemSecondaryAction>
-                    <Checkbox checked={selected} color={'primary'}/>
+                    <Checkbox checked={selected} color={'primary'} onClick={onClick(choice.value)}/>
                 </ListItemSecondaryAction>
             </ListItem>
         </React.Fragment>

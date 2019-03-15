@@ -4,8 +4,8 @@ import {Button} from '@material-ui/core';
 import ErrorMessage from '../../share/messages/Error';
 
 const styles = {
-    wrapper: {marginTop:20},
-    button:{float:'left', margin:10}
+    wrapper: {margin: 15},
+    button:{float:'left', marginTop:10}
 };
 export type ThereIsNoGameProps ={
     onRefresh: ()=> void     

@@ -47,7 +47,7 @@ class PredictResult extends React.Component<PredictResultProps, PredictResultSta
                 <CssBaseline />
                 <Paper square className={classes.paper + ' ' + classes.wrapper}>
                     <Typography className={classes.text} variant="h5" gutterBottom>
-                        {messages.scoreBoard}
+                        {messages.predictResult}
                     </Typography>
                     <Button variant="contained"
                             onClick={this.result}

@@ -23,12 +23,21 @@ type SideMenuClasses = {
     toolbarIcon: string,
 }
 
+export type Route = {
+    path: string,
+    name: string,
+    component: React.ComponentType,
+    icon:  React.ComponentType,
+    layout: string,
+    text: string,
+    role?: string
+}
+
 export type SideMenuProps = {
     classes: SideMenuClasses,
-    user: string,
     open: boolean,
     handleDrawerClose: ()=> void,
-    routes: any[],
+    routes: Route[],
     isAdmin: boolean
 };
 export type SideMenuState = {};
@@ -38,7 +47,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
         super(props);
     }
     render(){
-        const {classes, open, handleDrawerClose, routes, isAdmin, user} = this.props;
+        const {classes, open, handleDrawerClose, routes, isAdmin} = this.props;
         return(
             <React.Fragment>
             <Hidden smDown>
@@ -50,7 +59,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
                 }}
                 open={open}>
                 <div className={classes.toolbarIcon}>
-                    <Typography align='center' variant="h6">{user}</Typography>
+                    <Typography align='center' variant="h6">{messages.corebika}</Typography>
                   <IconButton onClick={handleDrawerClose}>
                     <ChevronRightIcon />
                   </IconButton>
@@ -69,7 +78,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
                         variant="temporary"
                         open={open}>
                         <div className={classes.toolbarIcon}>
-                            <Typography align='center' variant="h6">{messages.user} : {user}</Typography>
+                            <Typography align='center' variant="h6">{messages.corebika}</Typography>
                             <IconButton onClick={handleDrawerClose}>
                                 <ChevronRightIcon/>
                             </IconButton>
@@ -86,7 +95,7 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
 
 export default withStyles(sideMenustyles as any)(SideMenu);
 
-const getRoutes = (routes: any[], isAdmin: boolean, onClick: (()=>void))=>{
+const getRoutes = (routes: Route[], isAdmin: boolean, onClick: (()=>void))=>{
     const routesLinks = routes.map((route:any, key: number)=> {
         const link  =<SideLink route={route} key={key} onClick={onClick}/>;
         if(route.role == 'admin'){
@@ -99,15 +108,25 @@ const getRoutes = (routes: any[], isAdmin: boolean, onClick: (()=>void))=>{
     return routesLinks;
 };
 
+type SideLinkProps = {
+    route: Route,
+    onClick: ()=> void,
+    classes?: any
+}
 
-const SideLink = withStyles(sideLinkStyles)(({route, onClick, classes})=> <NavLink to={route.path}
-                                                                                   className={classes.route}
-                                                                                   activeClassName={classes.activeRoute}>
-    <ListItem button onClick={onClick}>
-        <ListItemIcon>
-         {React.createElement(route.icon)}
-        </ListItemIcon>
-        <ListItemText primary={route.text} />
-      </ListItem>
-</NavLink>);
-
+const SideLinkComp = (props:SideLinkProps)=> {
+    const { route,onClick,classes } = props;
+    return (
+        <NavLink to={route.path}
+        className={classes.route}
+        activeClassName={classes.activeRoute}>
+            <ListItem button onClick={onClick}>
+                <ListItemIcon>
+                {React.createElement(route.icon)}
+                </ListItemIcon>
+                <ListItemText primary={route.text} />
+            </ListItem>
+        </NavLink>
+    );
+};
+const SideLink = withStyles(sideLinkStyles)(SideLinkComp)

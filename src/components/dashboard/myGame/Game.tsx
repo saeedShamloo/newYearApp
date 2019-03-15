@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import {Typography,
+import {Typography,withStyles,
     Card,
     Grid,
     CardContent,
@@ -20,7 +19,7 @@ import {styles} from './gameJSS'
 import ConfirmDialog from "./ConfirmDialog";
 import Snack from "../../share/snack/Snack";
 import messages from "../../../constants/messages";
-import ThereIsNoGame from "./ThereIsNotGame";
+import ThereIsNoGame from "./ThereIsNoGame";
 
 export type GameProps = {
     classes: any,
@@ -115,10 +114,10 @@ class Game extends React.Component<GameProps, GameState> {
         });
 
         let message= '';
-        if(response.data != undefined){
-           message = messages.submitVoteSuccessfully
-        }else{
+        if(response.hasError != undefined){
             message = response.error.response.data.message;
+        }else{
+           message = messages.submitVoteSuccessfully            
         }
 
         this.setState((prevState: GameState) => ({
@@ -197,7 +196,7 @@ class Game extends React.Component<GameProps, GameState> {
     }
 }
 
-const Comp = withStyles(styles)(Game);
+const Comp = withStyles(styles as any)(Game);
 
 const mapStateToProps = (appState: IAppState) => ({
     loading: appState.loading

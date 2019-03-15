@@ -12,11 +12,12 @@ const styles = {
 export type SnackProps = {
     open: boolean,
     onClose: ()=> void,
-    message: string
+    message: string,
+    autoHideDuration?: number
 }
 
 function Snack(props: SnackProps) {
-    const { open, onClose,message } = props;
+    const { open, onClose,message, autoHideDuration=3000 } = props;
     return (
         <Snackbar
             open={open}
@@ -26,6 +27,7 @@ function Snack(props: SnackProps) {
                 'aria-describedby': 'message-id',
                 'style': styles
             }}
+            autoHideDuration={autoHideDuration}
             message={<span id="message-id">{message}</span>}
         />
     );

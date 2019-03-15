@@ -15,13 +15,14 @@ const styles = ()=>({
 export type ErrorMessageProps = {
     message: string,
     type?: string,
+    style?: object,
     classes?: any
 };
 
 const ErrorMessage = (props: ErrorMessageProps)=>{
-    const { classes,message, type='h6' } = props;
+    const { classes,message, type='h6', style } = props;
     return (
-        <Typography color={'error'} variant={type} className={classes.errorStyles}>
+        <Typography color={'error'} variant={type} className={classes.errorStyles} style={style}>
             {message}
         </Typography>
     );

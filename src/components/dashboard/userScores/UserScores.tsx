@@ -3,13 +3,18 @@ import {connect} from 'react-redux';
 import {Button, CssBaseline, Grid, Typography, withStyles} from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
 import {request, urls} from '../../../constants/values';
-import {baseURL, ReqWithLoadingAction} from '../../../utils/fetch/fetch';
+import {ReqWithLoadingAction} from '../../../utils/fetch/fetch';
 import {IAppState} from '../../../redux/types';
 import ScoreCard, {ScoreType} from "./ScoreCard";
 import messages from "../../../constants/messages";
 import Loading from "../../share/Loading/Loading";
 import { mainStyles } from './userScoreJSS';
+import ErrorMessage from '../../share/messages/Error';
 
+export const errorStyle= {
+    width: '100%',
+    margin: 15
+}
 export type UserScoresProps = {
     classes: any,
     loading?: boolean
@@ -32,13 +37,15 @@ class UserScores extends React.Component <UserScoresProps, UserScoresState> {
 
     getScores = async () => {
         const response: any = await ReqWithLoadingAction(request.get, true, urls.scores as string);
-        if (response.data.length) {
-            this.setState({scores: response.data})
+        const scores = response.data;
+        if(Array.isArray(scores)){
+            this.setState({scores})
         }
     };
 
     render() {
         const {classes, loading} = this.props;
+        const { scores } = this.state;
         if (loading) {
             return <div style={{marginTop:15}}><Loading loading={loading} size={20}/></div>
         }
@@ -62,8 +69,9 @@ class UserScores extends React.Component <UserScoresProps, UserScoresState> {
                         </Button>
                     </div>
                     <Grid container spacing={40} alignItems="stretch">
-                        {this.state.scores.map((score: ScoreType, index: number) => <ScoreCard key={index}
-                                                                                               score={score}/>)}
+                        {scores.length == 0 ?  <ErrorMessage message={messages.noScore} style={errorStyle} />:
+                         scores.map((score: ScoreType, index: number) => <ScoreCard key={index}
+                                                                                    score={score}/>)}
                     </Grid>
                 </main>
             </React.Fragment>
@@ -71,7 +79,7 @@ class UserScores extends React.Component <UserScoresProps, UserScoresState> {
     }
 }
 
-const Comp = withStyles(mainStyles)(UserScores);
+const Comp = withStyles(mainStyles as any)(UserScores);
 const mapStateToProps = (appState: IAppState) => ({
     loading: appState.loading
 });

@@ -1,4 +1,5 @@
 import {grey} from "@material-ui/core/colors";
+import { indigo } from "@material-ui/core/colors";
 
 const drawerWidth = 240;
 export const dashboardStyles = (theme: any) => ({
@@ -55,6 +56,9 @@ export const appBarStyles = (theme:any)=>({
     title: {
         flexGrow: 1,
       },
+      profileBtn: {
+          backgroundColor: indigo[800]
+      }
 })
 
 export const sideMenustyles = (theme: any)=>({

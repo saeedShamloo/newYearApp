@@ -7,9 +7,8 @@ import { loading } from './reducers/loading';
 export const initAppState: IAppState = {
     loading: false,
     authenticate: {
-        authenticated: false,
         error: '',
-        user: null
+        username: ''
     }
 }
 

@@ -25,9 +25,9 @@ export default class AuthService {
 
         if(response.data){
             const token = response.data['access_token'];
+            const username = response.data['fullName'];
             this.setToken(token);
-            // TODO: remove hardCode
-            response.user = adminUser;
+            this.setUsername(username);
         }else {
             response = { hasError:true, message: messages.loginError }
         }
@@ -60,6 +60,10 @@ export default class AuthService {
         localStorage.setItem('id_token', idToken)
     }
 
+    setUsername(name: string){
+        localStorage.setItem('username', name)
+    }
+
     getToken() {
         // Retrieves the user token from localStorage
         return localStorage.getItem('id_token')
@@ -76,8 +80,12 @@ export default class AuthService {
         return decode(this.getToken());
     }
 
+    getUsername(){
+        return localStorage.getItem('username')
+    }
+
     getRequestHeader(){
-            const headers = {
+            const headers: {[key:string]: string} = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             };

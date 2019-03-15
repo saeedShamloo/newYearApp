@@ -17,7 +17,7 @@ export type PredictType = {
 export type UserProps ={
     predict:PredictType,
     selected: boolean,
-    onClick
+    onClick: ()=> void
 }
 
 export const User = (props: UserProps)=>{
@@ -31,7 +31,7 @@ export const User = (props: UserProps)=>{
                 </ListItemAvatar>
                 <ListItemText primary={predict.choice} secondary={predict.description}/>
                 <ListItemSecondaryAction>
-                    <Checkbox checked={selected} color={'primary'}/>
+                    <Checkbox checked={selected} color={'primary'} onClick={onClick}/>
                 </ListItemSecondaryAction>
             </ListItem>
         </React.Fragment>

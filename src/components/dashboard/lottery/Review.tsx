@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
     withStyles,
     Typography,
@@ -10,6 +10,7 @@ import {
     DialogContent,
     DialogContentText, DialogActions
 } from '@material-ui/core';
+import BoruzIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import { reviewStyle } from './lotteryJSS';
 import { Formik } from 'formik';
 import messages from "../../../constants/messages";
@@ -66,7 +67,7 @@ class Review extends React.Component<ReviewProps, ReviewState> {
 }
 
 
-export default withStyles(reviewStyle)(Review);
+export default withStyles(reviewStyle as any)(Review);
 
 export const ReviewForm = ({ employeeInfo,personalInfo,onBack, onRegister })=>{
         return(
@@ -116,7 +117,10 @@ const ErrorDialog = ({open,onClose})=>{
             <DialogTitle id="alert-dialog-title">{messages.error}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    {messages.Boruz}
+                    {messages.Boruz} 
+                    <span style={{ display: 'inline-block',verticalAlign:'middle' }}>
+                    <BoruzIcon/>
+                    </span>
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

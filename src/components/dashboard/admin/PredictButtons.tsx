@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {Button, Divider, withStyles, Paper, Typography} from "@material-ui/core";
 import messages from "../../../constants/messages";
-import {postRequest} from "../../../utils/fetch/fetch";
+import { postRequest, getRequest } from '../../../utils/fetch/fetch';
 import {urls} from "../../../constants/values";
 import Loading from "../../share/Loading/Loading";
-import {grey} from "@material-ui/core/colors";
 
 const styles = {
     wrapper: {
@@ -49,7 +48,7 @@ class PredictButtons extends React.Component<PredictButtonsProps, PredictButtons
     handleStart = async () => {
         const {showPredictMessage} = this.props;
         this.setState({isFetching: true});
-        const response = await postRequest(urls.startSurvey as string, true,{id: 1 as string});
+        const response: any = await getRequest(urls.startSurvey as string, true);
         let msg = '';
         if (response.hasError) {
             msg = response.error.response.data.message;

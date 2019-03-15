@@ -9,33 +9,51 @@ import messages from "../../../constants/messages";
 import { styles } from './scoreBoardJSS'
 import {Player, default as ScoreItem} from "./ScoreItem";
 import Loading from "../../share/Loading/Loading";
+import FunDialog from './FunDialog';
 
 export type LogBoardProps = {
     classes: any,
     loading: boolean
 };
 export type LogBoardState = {
-    players: any[]
+    players: any[],
+    openDialog: boolean
 };
 
 class LogBoard extends React.Component<LogBoardProps, LogBoardState>{
+    _isMounted: boolean;
     constructor(props: LogBoardProps){
         super(props);
         this.state= {
-            players: []
+            players: [],
+            openDialog: false
         }
     }
 
     componentDidMount(){
+        this._isMounted = true;
         this.getPlayers();
+    }
+
+    componentWillUnmount(){
+        this._isMounted = false;
     }
 
     getPlayers = async ()=>{
         const response: any = await ReqWithLoadingAction(request.get,true,urls.scoreBoard as string);
-        if(response.data.length){
-            this.setState({ players: response.data })
+        const players = response.data;
+        if(this._isMounted && Array.isArray(players)){
+            this.setState({ players })
         }
     };
+
+    openDialog = ()=>{
+        this.setState({ openDialog: true })
+    }
+
+    closeDialog = ()=>{
+        this.setState({ openDialog: false })
+    }
 
     render(){
         const { classes, loading } = this.props;
@@ -55,15 +73,18 @@ class LogBoard extends React.Component<LogBoardProps, LogBoardState>{
                         <UpdateIcon/>
                     </Button>
                     <List className={classes.list}>
-                        {this.state.players.map((player:Player, index: number) => <ScoreItem key={index} player={player}/>)}
+                        {this.state.players.map((player:Player, index: number) => <ScoreItem key={index}
+                                                                                            onclick={this.openDialog}
+                                                                                             player={player}/>)}
                     </List>
                 </Paper>
+                <FunDialog open={this.state.openDialog} onClose={this.closeDialog}/>
             </React.Fragment>
         )
     }
 }
 
-const Comp = withStyles(styles)(LogBoard);
+const Comp = withStyles(styles as any)(LogBoard);
 const mapStateToProps = (appState: IAppState)=>({
     loading: appState.loading
 });

@@ -11,6 +11,7 @@ module.exports = merge(commonConfig, {
     ],
     devServer: {
         contentBase: './dist',
+        host: '0.0.0.0',
         historyApiFallback: true,
         hot: true,
         proxy: {

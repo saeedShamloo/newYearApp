@@ -1,10 +1,9 @@
 import labels from '../labels';
-import { User } from '../types/index';
 import { loading } from './loading';
 import AuthService from '../../utils/authenticate/AuthService';
 import history from '../../utils/history/history';
 
-export const authenticated = (user: User )=>({
+export const authenticated = (user: string )=>({
     type: labels.AUTHENTICATED,
     payload: {
         user
@@ -13,7 +12,9 @@ export const authenticated = (user: User )=>({
 
 export const authenticatedError = (errorMessage: string)=>({
     type: labels.AUTHENTICATION_ERROR,
-    errorMessage
+    payload: {
+        errorMessage
+    }
 });
 
 export const authenticate = (payload : {name: string, password: string}) => {
@@ -26,7 +27,7 @@ export const authenticate = (payload : {name: string, password: string}) => {
                 dispatch(authenticatedError(resoonse.message))
             }
             else{
-                dispatch(authenticated(resoonse.data[0] as User));
+                dispatch(authenticated(resoonse.data.fullName));
                 history.push('/');
             }
         })

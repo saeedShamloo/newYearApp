@@ -4,12 +4,12 @@ import history from '../history/history';
 
 export default function withAuth(AuthComponent : React.ComponentType) {
     const Auth = new AuthService();
-    return class AuthWrapped extends React.Component < any,
-    any > {
+    return class AuthWrapped extends React.Component < any,any > {
         constructor(props : any) {
             super(props);
             this.state = {
-                user: null
+                user: null,
+                username: ''
             }
         }
 
@@ -19,9 +19,11 @@ export default function withAuth(AuthComponent : React.ComponentType) {
             } else {
                 try {
                     const profile = Auth.getProfile();
+                    const username = Auth.getUsername();
                     // detect user is admin or no
                     this.setState({
-                        user: profile.sub
+                        user: profile.sub,
+                        username
                     })
                 } catch (err) {
                     Auth.logout();
@@ -31,7 +33,7 @@ export default function withAuth(AuthComponent : React.ComponentType) {
 
         render() {
             if (this.state.user) {
-                return (<AuthComponent history={history} user={this.state.user}/>)
+                return (<AuthComponent history={history} user={this.state.user} username={this.state.username}/>)
             } else {
                 return null
             }

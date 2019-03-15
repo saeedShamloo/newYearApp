@@ -19,12 +19,13 @@ type PredictState = {
     users: any[],
     isFetching: boolean,
     voting: boolean,
-    openSnack: false,
+    openSnack: boolean,
     message: string,
     hasError: boolean
 }
 
 class Predict extends React.Component<PredictProps, PredictState> {
+    _isMounted: boolean;
     constructor(props: PredictProps) {
         super(props);
         this.state = {
@@ -39,27 +40,32 @@ class Predict extends React.Component<PredictProps, PredictState> {
     }
 
     componentDidMount() {
-        // implement request
+        this._isMounted = true;
         this.getUser();
     }
 
+    componentWillUnmount(){
+        this._isMounted = false;
+    }
+
     getUser = async ()=> {
-        // implement request
         this.setState({isFetching: true});
-        const response = await getRequest(urls.mineSurvey as string, true);
-        if(response.hasError){
-            this.setState({
-                isFetching: false,
-                hasError: true,
-            })
-        }else {
-            const choices = response.data.choices;
-            const vote = response.data.myOpinion;
-            this.setState({
-                users: choices,
-                vote: vote,
-                isFetching: false
-            })
+        if(this._isMounted){
+            const response: any = await getRequest(urls.mineSurvey as string, true);
+            if(response.hasError){
+                this.setState({
+                    isFetching: false,
+                    hasError: true,
+                })
+            }else {
+                const choices = response.data.choices;
+                const vote = response.data.myOpinion;
+                this.setState({
+                    users: choices,
+                    vote: vote,
+                    isFetching: false
+                })
+            }
         }
     };
 
@@ -67,7 +73,7 @@ class Predict extends React.Component<PredictProps, PredictState> {
         this.setState({openSnack: false})
     };
 
-    handleClick = (value: string) => () => {
+    handleClick = (value: string | number) => () => {
         const {vote} = this.state;
         if (value == vote) {
             this.setState({vote: ''})
@@ -79,8 +85,7 @@ class Predict extends React.Component<PredictProps, PredictState> {
     handleSubmit = async () => {
         const {vote} = this.state;
         this.setState({voting: true});
-        // TODO: implement request
-        const response = await postRequest(urls.surveyVote as string, true, {
+        const response: any = await postRequest(urls.surveyVote as string, true, {
             surveyId: 1 as string,
             vote: vote as string
         });
@@ -104,9 +109,10 @@ class Predict extends React.Component<PredictProps, PredictState> {
         if (isFetching) {
             return <div style={{marginTop: 20}}><Loading loading={isFetching} size={20}/></div>
         }
-
+        if(hasError){
+            return <div style={{padding:15}}><ErrorMessage message={messages.thereIsNoSurvey}/></div>
+        }
         return (
-
             <React.Fragment>
                 <CssBaseline/>
                 <Paper square className={classes.paper + ' ' + classes.wrapper}>
@@ -118,11 +124,11 @@ class Predict extends React.Component<PredictProps, PredictState> {
                             color="primary" className={classes.button + ' ' + classes.refresh}>
                         <UpdateIcon/>
                     </Button>
-                    { !hasError ? <React.Fragment>
+                    <React.Fragment>
                         <List className={classes.list}>
                             {users.map((predict: PredictType, index: number) => <User predict={predict}
                                                                                       selected={predict.id == vote}
-                                                                                      onClick={this.handleClick(predict.id as string)}
+                                                                                      onClick={this.handleClick(predict.id)}
                                                                                       key={index}/>)}
                         </List>
                         <Button fullWidth
@@ -133,11 +139,7 @@ class Predict extends React.Component<PredictProps, PredictState> {
                                 onClick={this.handleSubmit}>
                             {voting ? <Loading loading={voting}/> : messages.submit}
                         </Button>
-                    </React.Fragment> :
-                    <div style={{padding:15}}>
-                        <ErrorMessage message={messages.thereIsNoSurvey}/>
-                    </div>
-                    }
+                    </React.Fragment>
                 </Paper>
                 <Snack open={openSnack} onClose={this.handleCloseSnack} message={message}/>
             </React.Fragment>
@@ -145,4 +147,4 @@ class Predict extends React.Component<PredictProps, PredictState> {
     }
 }
 
-export default withStyles(styles)(Predict);
+export default withStyles(styles as any)(Predict);

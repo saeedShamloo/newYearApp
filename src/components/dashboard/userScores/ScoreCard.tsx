@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
     Button, Card, CardActions, CardContent, CardHeader, Grid, Typography, List, withStyles
 } from '@material-ui/core';
-import StarIcon from '@material-ui/icons/StarBorder';
 import messages from "../../../constants/messages";
 import {cardStyles} from './userScoreJSS';
 import PlayersListItem from "./PlayersListItem";
@@ -36,17 +35,14 @@ export const ScoreCard = (props: ScoreCardProp) => {
                     subheaderTypographyProps={{align: 'center'}}
                     className={classes.cardHeader}
                 />
-                <CardContent style={{flexGrow: 1, padding: 8}}>
+                <CardContent className={classes.cardContent}>
                     <div className={classes.cardPricing}>
                         <Typography variant="subtitle1" color="textSecondary">
                             {messages.choices}
                         </Typography>
                     </div>
                     <List dense className={classes.root}>
-                        {score.gameDefinition.choices.map((choice: Choice, index: number) =>
-                            <PlayersListItem key={index}
-                                             isWinner={score.gameDefinition.answer == choice.value}
-                                             choice={choice}/>)}
+                        {getChoices(score.gameDefinition.choices, score.gameDefinition)}
                     </List>
                 </CardContent>
                 <CardActions className={classes.cardActions}>
@@ -59,4 +55,15 @@ export const ScoreCard = (props: ScoreCardProp) => {
     )
 };
 
-export default withStyles(cardStyles)(ScoreCard);
+export default withStyles(cardStyles as any)(ScoreCard);
+
+function getChoices(choices: any[],gameDefinition: any) : React.ReactElement[] | null{
+    let choicesList = null;
+    if(Array.isArray(choices)){
+        choicesList = choices.map((choice: Choice, index: number) =>
+        <PlayersListItem key={index}
+                         isWinner={gameDefinition.answer == choice.value}
+                         choice={choice}/>);
+    }
+    return choicesList;
+}

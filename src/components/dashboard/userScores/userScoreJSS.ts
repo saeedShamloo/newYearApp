@@ -1,6 +1,6 @@
 import {blueGrey, grey} from "@material-ui/core/colors";
 
-export const mainStyles = theme => ({
+export const mainStyles = (theme: any) => ({
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white
@@ -49,9 +49,13 @@ export const mainStyles = theme => ({
     },
 });
 
-export const cardStyles = theme => ({
+export const cardStyles = (theme: any) => ({
     cardHeader: {
         backgroundColor: theme.palette.grey[200],
+    },
+    cardContent: {
+        flexGrow:1,
+        padding: 8
     },
     cardPricing: {
         display: 'flex',

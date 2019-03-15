@@ -14,8 +14,9 @@ import MoodIcon from '@material-ui/icons/Mood';
 import Lottery from "./components/dashboard/lottery/Lottery";
 import Predict from "./components/dashboard/predict/Predict";
 import PredictResult from './components/dashboard/predict/result/PredictResult';
+import { Route } from './layout/dashboard/SideMenu';
 
-const dashboardRoutes = [
+const dashboardRoutes : Route[] = [
     {
         path: "/scores",
         name: "scores",

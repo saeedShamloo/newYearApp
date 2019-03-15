@@ -12,23 +12,23 @@ export type Player = {
 }
 export type ScoreItemProps = {
     player: Player,
+    onclick: ()=> void,
     classes: any
 };
 
 const ScoreItem = (props: ScoreItemProps)=>{
-    const { player, classes } = props;
-
+    const { player, classes, onclick } = props;
     return (
         <React.Fragment>
             <Divider/>
-            <ListItem button>
+            <ListItem button onClick={onclick}>
                 <Avatar className={classes.avatar}>
                     <PersonIcon />
                 </Avatar>
                 <ListItemText primary={player.userFullName} secondary={ messages.score + ' : ' + player.score } />
                 <ListItemSecondaryAction>
-                    <IconButton aria-label="Comments">
-                        <CommentIcon />
+                    <IconButton aria-label="Comments"  onClick={onclick}>
+                        <CommentIcon/>
                     </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>

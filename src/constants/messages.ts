@@ -2,7 +2,7 @@ enum messages {
     loginError = 'یه چیزیو اشتباه زدی، دقت کن !!!',
     serverDown = 'سرور پوکیده،دوباره امتحان کن',
     startGame = 'بریم بازی !!!',
-    corebika = 'کوربیکا',
+    corebika = 'کربیکا',
     userProfile = 'پروفایل کاربری',
     pariticipates = 'شرکت کننده ها :',
     userScoreTitle = 'توی این قسمت امتیازهای خودتو میتونی ببینی',
@@ -60,7 +60,14 @@ enum messages {
     surverySumit= 'رای شما با موفقیت ثبت شد',
     surveys = 'مجموع آرا',
     thereIsNoSurvey= 'پیش بینی فعالی وجود ندارد',
-    runningGameList = 'لیست بازی های فعال'
+    runningGameList = 'لیست بازی های فعال',
+    username= 'نام کاربری',
+    fullName= 'نام',
+    exit = 'خروج',
+    predictResult = 'نتایج پیش بینی',
+    dashboard = 'داشبورد',
+    noScore = 'هنوز امتیازی برات ثبت نشده!!!',
+    funDialogText = 'دنبال چی هستی مهندس ؟؟؟'
 }
 
 export default messages;
