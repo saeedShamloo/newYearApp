@@ -68,7 +68,9 @@ enum messages {
     dashboard = 'داشبورد',
     noScore = 'هنوز امتیازی برات ثبت نشده!!!',
     funDialogText = 'دنبال چی هستی مهندس ؟؟؟',
-    corebikaStory= 'داستان کربیکا'
+    corebikaStory= 'داستان کربیکا',
+    cancelAnticipate = 'انصراف از بازی فیزیکی',
+    cancelPlayGameSucces = 'دیگه نمیتونی بازی کنی!!!'
 }
 
 export default messages;

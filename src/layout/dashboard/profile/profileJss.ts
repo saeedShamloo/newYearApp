@@ -3,9 +3,14 @@ export const styles = {
     logOutIcon: {
         transform: 'rotateY(180deg)',
         margin:'0 5px',
+        position: 'absolute',
+        left: 10,
+    },
+    logOutBtn:{
+        marginTop:10,
     },
     card: {
-        minWidth: 200
+        minWidth: 246
     },
     avatarContainer: {
         display: 'flex',
@@ -19,6 +24,7 @@ export const styles = {
         boxShadow: '0 0 3px #ddd'
     },
     actionsWrapper: {
-        direction: 'ltr'
+        direction: 'ltr',
+        flexWrap: 'wrap'
     },
 };
