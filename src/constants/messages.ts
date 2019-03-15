@@ -67,7 +67,8 @@ enum messages {
     predictResult = 'نتایج پیش بینی',
     dashboard = 'داشبورد',
     noScore = 'هنوز امتیازی برات ثبت نشده!!!',
-    funDialogText = 'دنبال چی هستی مهندس ؟؟؟'
+    funDialogText = 'دنبال چی هستی مهندس ؟؟؟',
+    corebikaStory= 'داستان کربیکا'
 }
 
 export default messages;

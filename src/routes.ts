@@ -71,7 +71,7 @@ const dashboardRoutes : Route[] = [
         component: Help,
         icon: HelpIcon,
         layout: "/dashboard",
-        text: 'توضیحات'
+        text: 'داستان کربیکا'
     },
       {
         path: "/admin",
