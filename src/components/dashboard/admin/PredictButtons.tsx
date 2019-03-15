@@ -37,7 +37,6 @@ type PredictButtonsState = {
 };
 
 class PredictButtons extends React.Component<PredictButtonsProps, PredictButtonsState>{
-
     constructor(props: PredictButtonsProps){
         super(props);
         this.state = {
@@ -62,9 +61,7 @@ class PredictButtons extends React.Component<PredictButtonsProps, PredictButtons
     handleFinish = async () => {
         const {showPredictMessage} = this.props;
         this.setState({ isFetching: true });
-        const response = await postRequest(urls.finishSurvey as string, true , {
-            id: '1'
-        });
+        const response:any = await getRequest(urls.finishSurvey as string, true);
         let msg = '';
         if (response.hasError) {
             msg = response.error.response.data.message;
