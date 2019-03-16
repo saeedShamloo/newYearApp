@@ -16,6 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { sideMenustyles,sideLinkStyles } from './DashbardJSS';
 import { NavLink } from "react-router-dom";
 import messages from '../../constants/messages';
+import Logo from "../../components/share/Logo";
 
 type SideMenuClasses = {
     drawerPaper: string,
@@ -59,7 +60,8 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
                 }}
                 open={open}>
                 <div className={classes.toolbarIcon}>
-                    <Typography align='center' variant="h6">{messages.corebika}</Typography>
+                    {/*<Typography align='center' variant="h6">{messages.corebika}</Typography>*/}
+                    <div style={{width:160}}><Logo /></div>
                   <IconButton onClick={handleDrawerClose}>
                     <ChevronRightIcon />
                   </IconButton>
@@ -78,7 +80,8 @@ class SideMenu extends React.Component<SideMenuProps, SideMenuState>{
                         variant="temporary"
                         open={open}>
                         <div className={classes.toolbarIcon}>
-                            <Typography align='center' variant="h6">{messages.corebika}</Typography>
+                            <div style={{width:160}}><Logo /></div>
+                            {/*<Typography align='center' variant="h6">{messages.corebika}</Typography>*/}
                             <IconButton onClick={handleDrawerClose}>
                                 <ChevronRightIcon/>
                             </IconButton>

@@ -23,5 +23,7 @@ export enum urls {
     mineSurvey = urls.survey + '/mine',
     surveyVote = urls.survey + '/vote',
     surveyResult = urls.survey + '/result',
-    finishSurvey = urls.survey + '/admin/finish'
+    finishSurvey = urls.survey + '/admin/finish',
+    unResign = urls.base + '/user/un-resign',
+    resign = urls.base + '/user/resign'
 }

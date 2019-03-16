@@ -70,7 +70,11 @@ enum messages {
     funDialogText = 'دنبال چی هستی مهندس ؟؟؟',
     corebikaStory= 'داستان کربیکا',
     cancelAnticipate = 'انصراف از بازی فیزیکی',
-    cancelPlayGameSucces = 'دیگه نمیتونی بازی کنی!!!'
+    cancelPlayGameSucces = 'دیگه نمیتونی بازی کنی!!!',
+    alreadyResigned = 'قبلا انصراف داده بودی!',
+    unResingSucces = 'می تونی حالا بازی کنی',
+    unResign= 'مشارکت در بازی ها',
+    alreadyInvolved = 'قبلا مشارکتت ثبت شده'
 }
 
 export default messages;
